@@ -5,8 +5,9 @@
 Нужны папки sheet_definitions, palette_definitions и spritesheets (хватит sparse-клона).
 
 На выходе sprites/*.webp (lossless) и sprites/manifest.json, плюс CREDITS.md.
-Каждый обычный слой – полоса 576x192: строка 0 – walk лицом вниз (9 кадров),
-строка 1 – slash лицом вниз (6 кадров), строка 2 – hurt (6 кадров), кадр 64x64.
+Каждый обычный слой – полоса 576x320: строка 0 – walk лицом вниз (9 кадров),
+строка 1 – slash лицом вниз (6 кадров), строка 2 – hurt (6 кадров), строки 3 и 4 – walk влево
+и вправо (для героя на рабочем столе), кадр 64x64.
 Слои удара большого оружия (slash_128, slash_oversize) – полоса 6 кадров по 128 или 192 px.
 Раскраска по палитрам LPC делается здесь, в браузере палитр нет.
 Слои собираются под три тела по форме героя (FORMS); манифест хранит файл слоя для каждой формы.
@@ -22,6 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "sprites"
 F = 64
 SOUTH = 2  # строка «лицом вниз» в листах walk и slash (n, w, s, e)
+WEST, EAST = 1, 3  # ходьба влево и вправо – для героя на рабочем столе
 
 # (ключ, определение, номера слоёв, вариант-файл, перекраски [(материал, база, цель)])
 # ---------- ВНЕШНОСТЬ ГЕРОЯ: менять только здесь, потом заново запустить скрипт ----------
@@ -119,13 +121,15 @@ def sheet(lpc, base_path, anim, variant):
 
 
 def build_std(lpc, base_path, variant, spec):
-    strip = Image.new("RGBA", (9 * F, 3 * F))
+    rows = [("walk", SOUTH, 9), ("slash", SOUTH, 6), ("hurt", 0, 6), ("walk", WEST, 9), ("walk", EAST, 9)]
+    strip = Image.new("RGBA", (9 * F, len(rows) * F))
     found = []
-    for row, (anim, src_row, n) in enumerate([("walk", SOUTH, 9), ("slash", SOUTH, 6), ("hurt", 0, 6)]):
+    for row, (anim, src_row, n) in enumerate(rows):
         im = sheet(lpc, base_path, anim, variant)
         if im is None:
             continue
-        found.append(anim)
+        if anim not in found:
+            found.append(anim)
         strip.paste(im.crop((0, src_row * F, n * F, (src_row + 1) * F)), (0, row * F))
     return recolor(strip, lpc, spec), found
 

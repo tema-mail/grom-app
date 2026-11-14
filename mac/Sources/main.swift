@@ -1,7 +1,7 @@
 import AppKit
 import WebKit
 
-/// «Гром» на маке: окно со страницей героя. Раз в 30 с и при открытии забирает state.json с claude-vps по ssh
+/// «Гром» на маке: герой на рабочем столе (Pet.swift) и окно характеристик со страницей героя. Раз в 30 с и при открытии забирает state.json с claude-vps по ssh
 /// и передаёт его странице через window.gromState; действия со страницы дописывает в очередь бота.
 enum Settings {
     static let pageURL = URL(string: "https://tema-mail.github.io/grom-app/")!
@@ -20,14 +20,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKSc
     private var pageReady = false
     private var fetching = false
     private let queue = DispatchQueue(label: "grom.ssh", qos: .utility)
+    private var pet: PetController!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         makeMenu()
         makeWindow()
+        pet = PetController(pageURL: Settings.pageURL)
+        pet.onOpenStats = { [weak self] in self?.showWindow() }
         showWindow()
+        // опрос идёт и при закрытом окне: герой на столе тоже показывает форму и шмот
         timer = Timer.scheduledTimer(withTimeInterval: Settings.pollInterval, repeats: true) { [weak self] _ in
-            guard let self, self.window.isVisible else { return }
-            self.refresh()
+            self?.refresh()
         }
     }
 
@@ -87,6 +90,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKSc
                 case .success(let json):
                     self.lastState = json
                     self.push()
+                    if let obj = try? JSONSerialization.jsonObject(with: Data(json.utf8)) as? [String: Any] {
+                        self.pet.update(obj)
+                    }
                 case .failure(let error):
                     NSLog("Гром: нет состояния – \(error.description)")
                     self.js("window.gromSvyaz && window.gromSvyaz(false)")
@@ -96,7 +102,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKSc
     }
 
     private func push() {
-        guard pageReady, let json = lastState else { return }
+        guard pageReady, window.isVisible, let json = lastState else { return }
         js("window.gromState && window.gromState(\(json))")
     }
 
