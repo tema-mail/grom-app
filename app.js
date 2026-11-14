@@ -151,17 +151,27 @@
     state = s;
     $("demo").hidden = !demo;
     var prev = shown || (demo ? null : readPrev());
-    var now = { hp: num(s.hp), monety: num(s.monety), forma: s.forma || "" };
+    var ev = lastEvent(s);
+    var now = { hp: num(s.hp), monety: num(s.monety), forma: s.forma || "", ev: ev ? (ev.t || "") + " " + (ev.tekst || "") : "" };
     render();
     if (demo) {
-      setTimeout(function () { window.GromHero.play("slash"); }, 900);
+      setTimeout(function () { window.GromHero.fight("cherepaha"); }, 900);
     } else if (prev) {
       if (prev.forma && now.forma && prev.forma !== now.forma && FORMA[now.forma]) formaUp(now.forma);
       else if (now.hp < num(prev.hp)) window.GromHero.play("hurt");
-      else if (now.monety > num(prev.monety) && !s.nokaut) window.GromHero.play("slash");
+      else if (!s.nokaut && now.ev !== prev.ev && /День закрыт|Челлендж.*выполнен/i.test(now.ev)) window.GromHero.fight("kapitan");
+      else if (now.monety > num(prev.monety) && !s.nokaut) {
+        if (/Зелёная задача/i.test(now.ev)) window.GromHero.fight("cherepaha");
+        else window.GromHero.play("slash");
+      }
     }
     shown = now;
     if (!demo) lsSet("grom_prev", JSON.stringify(now));
+  }
+
+  function lastEvent(s) {
+    var list = s.segodnya && Array.isArray(s.segodnya.sobytiya) ? s.segodnya.sobytiya : [];
+    return list.length ? list[list.length - 1] : null;
   }
 
   // смена формы тела: плашка над героем и победный замах
@@ -406,6 +416,10 @@
       });
       if (state) renderShop();
     });
+  });
+
+  $("boy-btn").addEventListener("click", function () {
+    window.GromHero.fight(Math.random() < 0.5 ? "cherepaha" : "kapitan");
   });
 
   window.addEventListener("hashchange", function () {

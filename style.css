@@ -100,8 +100,8 @@ h2 { font-size: 18px; margin: 0 0 10px; display: flex; align-items: center; gap:
   overflow: hidden;
 }
 #hero {
-  width: min(100%, 192px); /* герой ×2: Артём 15.11 – вдвое меньше прежнего */
-  aspect-ratio: 1 / 1;
+  width: min(100%, 320px); /* герой ×2 (Артём 15.11), холст 160x96 – справа место для боя */
+  aspect-ratio: 5 / 3;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   display: block;
@@ -118,6 +118,19 @@ h2 { font-size: 18px; margin: 0 0 10px; display: flex; align-items: center; gap:
   animation: forma-in .4s ease-out;
 }
 @keyframes forma-in { from { transform: translate(-50%, 12px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+.boy-pop {
+  position: absolute; left: 62%; top: 30%; opacity: 0; pointer-events: none;
+  font-weight: 900; font-size: 22px; color: #ffd23f; letter-spacing: 1px;
+  text-shadow: 2px 2px 0 #3a1d00, -1px -1px 0 #3a1d00;
+}
+.boy-pop.go { animation: boy-pop .55s ease-out; }
+@keyframes boy-pop { 0% { opacity: 0; transform: translateY(6px) scale(.7); } 25% { opacity: 1; transform: scale(1.15); } 100% { opacity: 0; transform: translateY(-18px); } }
+.boy-say {
+  position: absolute; left: 50%; top: 10px; transform: translateX(-50%);
+  background: #fff; color: #111; font-weight: 800; font-size: 14px; white-space: nowrap;
+  padding: 5px 12px; border-radius: 12px; border: 2px solid #222;
+}
+.boy-btn { display: block; margin: 10px auto 0; }
 .nokaut.otdyh { background: var(--xp); }
 .stats { margin-top: 12px; display: grid; gap: 8px; }
 .lvl { font-size: 15px; }
