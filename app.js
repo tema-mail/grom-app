@@ -363,6 +363,7 @@
     apply(obj, false);
     return true;
   };
+  window.gromToast = function (text) { toast(String(text || "")); };
   window.gromSvyaz = function (ok) {
     $("offline").hidden = !!ok;
     if (!ok && !state) apply(DEMO, true);
