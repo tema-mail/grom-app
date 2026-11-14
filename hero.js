@@ -107,11 +107,29 @@
     var ls = manifest.items[id].filter(function (L) { return !L.slash && L.anims.indexOf("walk") >= 0; });
     var pending = ls.length;
     function paint() {
-      c.clearRect(0, 0, target.width, target.height);
+      // слои предмета на кадр 64x64, затем обрезка по видимым пикселям и целое увеличение в иконку
+      var tmp = document.createElement("canvas");
+      tmp.width = F; tmp.height = F;
+      var t = tmp.getContext("2d");
       ls.slice().sort(function (a, b) { return a.z - b.z; }).forEach(function (L) {
         var img = images[L.f];
-        if (img && img.complete && img.naturalWidth) c.drawImage(img, 8, 0, 48, 64, 0, 0, 48, 64);
+        if (img && img.complete && img.naturalWidth) t.drawImage(img, 0, 0, F, F, 0, 0, F, F);
       });
+      var px = t.getImageData(0, 0, F, F).data;
+      var x0 = F, y0 = F, x1 = -1, y1 = -1;
+      for (var y = 0; y < F; y++) {
+        for (var x = 0; x < F; x++) {
+          if (px[(y * F + x) * 4 + 3] > 0) {
+            if (x < x0) x0 = x; if (x > x1) x1 = x;
+            if (y < y0) y0 = y; if (y > y1) y1 = y;
+          }
+        }
+      }
+      c.clearRect(0, 0, target.width, target.height);
+      if (x1 < 0) return;
+      var w = x1 - x0 + 1, h = y1 - y0 + 1;
+      var k = Math.max(1, Math.floor(Math.min((target.width - 4) / w, (target.height - 4) / h)));
+      c.drawImage(tmp, x0, y0, w, h, Math.floor((target.width - w * k) / 2), Math.floor((target.height - h * k) / 2), w * k, h * k);
     }
     ls.forEach(function (L) {
       var img = load(L.f);
