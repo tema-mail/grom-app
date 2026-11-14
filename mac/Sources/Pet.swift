@@ -11,6 +11,7 @@ struct PetLayer {
     let files: [String: String]
     let z: Int
     let anims: [String]
+    let slash: Int? // удар большим оружием: своя полоса, кадр slash x slash
 }
 
 /// Слои LPC со страницы героя. Грузятся один раз при запуске; без них герой просто не рисуется.
@@ -26,9 +27,8 @@ final class PetSprites {
             guard let data, let m = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return }
             func layers(_ raw: Any?) -> [PetLayer] {
                 (raw as? [[String: Any]] ?? []).compactMap { L in
-                    guard let files = L["f"] as? [String: String], let z = L["z"] as? Int,
-                          let anims = L["anims"] as? [String] else { return nil } // удары большим оружием на столе не нужны
-                    return PetLayer(files: files, z: z, anims: anims)
+                    guard let files = L["f"] as? [String: String], let z = L["z"] as? Int else { return nil }
+                    return PetLayer(files: files, z: z, anims: L["anims"] as? [String] ?? [], slash: L["slash"] as? Int)
                 }
             }
             let base = layers(m["base"])
@@ -37,6 +37,7 @@ final class PetSprites {
             var extra: [String: [PetLayer]] = [:]
             for (id, raw) in m["extra"] as? [String: Any] ?? [:] { extra[id] = layers(raw) }
             let names = Set((base + items.values.flatMap { $0 } + extra.values.flatMap { $0 }).flatMap { $0.files.values })
+                .union(PetFight.enemies.map { "vrag_\($0)" })
             var images: [String: CGImage] = [:]
             let lock = NSLock()
             let group = DispatchGroup()
@@ -80,6 +81,15 @@ final class PetView: NSView {
     var tick = 0
     var bubble: String?
     var onClick: (() -> Void)?
+    var onFightMenu: (() -> Void)?
+    var onStatsMenu: (() -> Void)?
+    var fight: PetFight?
+    /// Где стоит герой: по центру, в бою – левее, справа место противнику.
+    var heroRect: NSRect {
+        let size = CGFloat(Self.frame) * Self.scale
+        let x = fight != nil ? PetFight.heroX : (bounds.width - size) / 2
+        return NSRect(x: x, y: 0, width: size, height: size)
+    }
 
     private var dragStart: NSPoint?
     private var originStart: NSPoint = .zero
@@ -93,9 +103,10 @@ final class PetView: NSView {
         guard let ctx = NSGraphicsContext.current?.cgContext else { return }
         ctx.clear(bounds)
         ctx.interpolationQuality = .none
-        let size = CGFloat(Self.frame) * Self.scale
-        let spriteRect = NSRect(x: (bounds.width - size) / 2, y: 0, width: size, height: size)
-        if let sprites {
+        let spriteRect = heroRect
+        if let sprites, fight != nil {
+            drawFight(ctx, sprites: sprites)
+        } else if let sprites {
             let (anim, row, col): (String, Int, Int) = {
                 switch pose {
                 case .knocked: return ("hurt", 2, 1 + (tick / 6) % 2)
@@ -119,11 +130,11 @@ final class PetView: NSView {
         if let bubble { drawBubble(bubble, above: spriteRect) }
     }
 
-    private func drawBubble(_ text: String, above sprite: NSRect) {
+    func drawBubble(_ text: String, above sprite: NSRect) {
         let attrs: [NSAttributedString.Key: Any] = [.font: NSFont.boldSystemFont(ofSize: 13), .foregroundColor: NSColor.black]
         let str = NSAttributedString(string: text, attributes: attrs)
         let ts = str.size()
-        let box = NSRect(x: (bounds.width - ts.width) / 2 - 10, y: sprite.maxY - 30, width: ts.width + 20, height: ts.height + 12)
+        let box = NSRect(x: sprite.midX - ts.width / 2 - 10, y: sprite.maxY - 30, width: ts.width + 20, height: ts.height + 12)
         let path = NSBezierPath(roundedRect: box, xRadius: 10, yRadius: 10)
         let tail = NSBezierPath()
         tail.move(to: NSPoint(x: box.midX - 6, y: box.minY + 1))
@@ -181,11 +192,14 @@ final class PetController {
     private var ticksLeft = 0
     private var knocked = false
     private var dayOff = false
+    private var prevMonety: Int?
+    private var prevEv = ""
+    private var nextRandomFight = Date().addingTimeInterval(Double.random(in: 20...40) * 60)
     private var bubbleUntil = Date.distantPast
     var onOpenStats: (() -> Void)?
 
     init(pageURL: URL) {
-        let size = NSSize(width: 150, height: CGFloat(PetView.frame) * PetView.scale + PetView.bubbleHeight)
+        let size = NSSize(width: 300, height: CGFloat(PetView.frame) * PetView.scale + PetView.bubbleHeight)
         panel = PetPanel(contentRect: NSRect(origin: .zero, size: size),
                          styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: false)
         panel.isOpaque = false
@@ -198,6 +212,8 @@ final class PetController {
         view = PetView(frame: NSRect(origin: .zero, size: size))
         panel.contentView = view
         view.onClick = { [weak self] in self?.clicked() }
+        view.onFightMenu = { [weak self] in self?.startFight() }
+        view.onStatsMenu = { [weak self] in self?.onOpenStats?() }
 
         let visible = (NSScreen.screens.first ?? NSScreen.main!).visibleFrame // экран со строкой меню
         panel.setFrameOrigin(NSPoint(x: visible.minX + visible.width * 0.6, y: visible.minY))
@@ -212,6 +228,21 @@ final class PetController {
 
     /// Новое состояние от бота: форма, шмот, нокаут, выходной.
     func update(_ state: [String: Any]) {
+        let monety = state["monety"] as? Int ?? 0
+        var ev = ""
+        if let sg = state["segodnya"] as? [String: Any], let list = sg["sobytiya"] as? [[String: Any]], let last = list.last {
+            ev = "\(last["t"] as? String ?? "") \(last["tekst"] as? String ?? "")"
+        }
+        // бой по событию – как на странице: Капитан Отмазка за закрытый день или челлендж, Черепаха за зелёную задачу
+        if let prev = prevMonety, !(state["nokaut"] as? Bool ?? false) {
+            if ev != prevEv, ev.range(of: "День закрыт|Челлендж.*выполнен", options: [.regularExpression, .caseInsensitive]) != nil {
+                startFight("kapitan")
+            } else if monety > prev, ev.range(of: "Зелёная задача", options: .caseInsensitive) != nil {
+                startFight("cherepaha")
+            }
+        }
+        prevMonety = monety
+        prevEv = ev
         if let f = state["forma"] as? String { view.forma = f }
         var n: [String: String] = [:]
         for (slot, id) in state["naryad"] as? [String: Any] ?? [:] { if let id = id as? String { n[slot] = id } }
@@ -242,8 +273,25 @@ final class PetController {
         }
     }
 
+    /// Бой: противник входит справа, три удара, улетает, герой стоит с облачком.
+    func startFight(_ vrag: String? = nil) {
+        guard view.fight == nil else { return }
+        view.bubble = nil
+        view.fight = PetFight(vrag: vrag ?? PetFight.enemies.randomElement()!)
+        view.needsDisplay = true
+    }
+
     private func tick() {
         var changed = false
+        if let f = view.fight {
+            if f.finished { view.fight = nil; view.pose = .stand; ticksLeft = 0 }
+            view.needsDisplay = true
+            return
+        }
+        if Date() >= nextRandomFight {
+            nextRandomFight = Date().addingTimeInterval(Double.random(in: 20...40) * 60)
+            if !knocked && !dayOff && !view.isDragging { startFight(); return }
+        }
         if view.bubble != nil, Date() >= bubbleUntil { view.bubble = nil; changed = true }
         if knocked || dayOff {
             let pose: PetPose = knocked ? .knocked : .relax
