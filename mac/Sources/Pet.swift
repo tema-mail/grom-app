@@ -188,7 +188,7 @@ final class PetController {
         panel.contentView = view
         view.onClick = { [weak self] in self?.clicked() }
 
-        let visible = (NSScreen.main ?? NSScreen.screens[0]).visibleFrame
+        let visible = (NSScreen.screens.first ?? NSScreen.main!).visibleFrame // экран со строкой меню
         panel.setFrameOrigin(NSPoint(x: visible.minX + visible.width * 0.6, y: visible.minY))
         panel.orderFrontRegardless()
         sprites.load(from: pageURL) { [weak self] in
@@ -207,6 +207,8 @@ final class PetController {
         view.naryad = n
         let saturday = Calendar.current.component(.weekday, from: Date()) == 7
         resting = (state["nokaut"] as? Bool ?? false) || (state["vyhodnoy"] as? Bool ?? false) || saturday
+        // проверка прогулки в выходной: GROM_PET_WALK=1 ~/Applications/Grom.app/Contents/MacOS/Grom
+        if ProcessInfo.processInfo.environment["GROM_PET_WALK"] == "1", !(state["nokaut"] as? Bool ?? false) { resting = false }
         view.needsDisplay = true
     }
 
