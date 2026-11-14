@@ -7,9 +7,9 @@
 На выходе sprites/*.webp (lossless) и sprites/manifest.json, плюс CREDITS.md.
 Каждый обычный слой – полоса 576x320: строка 0 – walk лицом вниз (9 кадров),
 строка 1 – slash лицом вниз (6 кадров), строка 2 – hurt (6 кадров), строки 3 и 4 – walk влево
-и вправо (для героя на рабочем столе), строка 5 – sit лицом вниз (3 кадра), кадр 64x64.
+и вправо (для героя на рабочем столе), строка 5 – sit лицом вниз (3 кадра), 6 – slash вправо (бой), кадр 64x64.
 Отдельно «ochki» (солнцезащитные очки) – надеваются на выходной, в манифесте в "extra".
-Слои удара большого оружия (slash_128, slash_oversize) – полоса 6 кадров по 128 или 192 px.
+Слои удара большого оружия (slash_128, slash_oversize) – 6 кадров по 128 или 192 px, две строки: вниз и вправо.
 Раскраска по палитрам LPC делается здесь, в браузере палитр нет.
 Слои собираются под три тела по форме героя (FORMS); манифест хранит файл слоя для каждой формы.
 """
@@ -127,7 +127,7 @@ def sheet(lpc, base_path, anim, variant):
 
 def build_std(lpc, base_path, variant, spec):
     rows = [("walk", SOUTH, 9), ("slash", SOUTH, 6), ("hurt", 0, 6), ("walk", WEST, 9), ("walk", EAST, 9),
-            ("sit", SOUTH, 3)]
+            ("sit", SOUTH, 3), ("slash", EAST, 6)]
     strip = Image.new("RGBA", (9 * F, len(rows) * F))
     found = []
     for row, (anim, src_row, n) in enumerate(rows):
@@ -143,7 +143,10 @@ def build_std(lpc, base_path, variant, spec):
 def build_custom(lpc, base_path, variant, size):
     p = fetch(lpc, f"spritesheets/{base_path}{variant}.png")
     im = Image.open(p).convert("RGBA")
-    return im.crop((0, SOUTH * size, 6 * size, (SOUTH + 1) * size))
+    out = Image.new("RGBA", (6 * size, 2 * size))  # строка 0 – удар лицом вниз, 1 – вправо (бой)
+    out.paste(im.crop((0, SOUTH * size, 6 * size, (SOUTH + 1) * size)), (0, 0))
+    out.paste(im.crop((0, EAST * size, 6 * size, (EAST + 1) * size)), (0, size))
+    return out
 
 
 def save(im, name):
@@ -220,6 +223,13 @@ def write_credits_md(credits):
         "перекрашены по палитрам LPC и сохранены в WebP без потерь (tools/sprites.py).",
         "Каждый файл можно использовать по любой из перечисленных у него лицензий; "
         "для CC-BY-SA и GPL производные слои в папке sprites/ распространяются на тех же условиях.",
+        "",
+    ]
+    lines += [
+        "## Противники – свои",
+        "",
+        "Черепаха-Прокрастинатор и Капитан Отмазка (sprites/vrag_*.webp) нарисованы для «Грома» кодом "
+        "(tools/enemies.py), не из LPC. Права – у владельца проекта.",
         "",
     ]
     for c in credits:

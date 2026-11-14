@@ -4,6 +4,10 @@
 Ниже – только файлы, взятые в эту страницу. Слои обрезаны до строки «лицом вниз», перекрашены по палитрам LPC и сохранены в WebP без потерь (tools/sprites.py).
 Каждый файл можно использовать по любой из перечисленных у него лицензий; для CC-BY-SA и GPL производные слои в папке sprites/ распространяются на тех же условиях.
 
+## Противники – свои
+
+Черепаха-Прокрастинатор и Капитан Отмазка (sprites/vrag_*.webp) нарисованы для «Грома» кодом (tools/enemies.py), не из LPC. Права – у владельца проекта.
+
 ## body – Body Color (`body/bodies/male`)
 
 - Авторы: bluecarrot16, JaidynReiman, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjölund (wulax), Stephen Challener (Redshrike)
