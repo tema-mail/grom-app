@@ -100,7 +100,7 @@ h2 { font-size: 18px; margin: 0 0 10px; display: flex; align-items: center; gap:
   overflow: hidden;
 }
 #hero {
-  width: min(100%, 384px);
+  width: min(100%, 192px); /* герой ×2: Артём 15.11 – вдвое меньше прежнего */
   aspect-ratio: 1 / 1;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -145,6 +145,7 @@ h2 { font-size: 18px; margin: 0 0 10px; display: flex; align-items: center; gap:
 /* сегодня */
 .events { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .events li { display: grid; grid-template-columns: 48px 1fr; gap: 8px; font-size: 15px; }
+.events li.muted { display: block; }
 .events .t { color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* челленджи и босс */
