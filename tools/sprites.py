@@ -7,7 +7,8 @@
 На выходе sprites/*.webp (lossless) и sprites/manifest.json, плюс CREDITS.md.
 Каждый обычный слой – полоса 576x320: строка 0 – walk лицом вниз (9 кадров),
 строка 1 – slash лицом вниз (6 кадров), строка 2 – hurt (6 кадров), строки 3 и 4 – walk влево
-и вправо (для героя на рабочем столе), кадр 64x64.
+и вправо (для героя на рабочем столе), строка 5 – sit лицом вниз (3 кадра), кадр 64x64.
+Отдельно «ochki» (солнцезащитные очки) – надеваются на выходной, в манифесте в "extra".
 Слои удара большого оружия (slash_128, slash_oversize) – полоса 6 кадров по 128 или 192 px.
 Раскраска по палитрам LPC делается здесь, в браузере палитр нет.
 Слои собираются под три тела по форме героя (FORMS); манифест хранит файл слоя для каждой формы.
@@ -46,6 +47,10 @@ BASE = [
     ("hair", V["volosy"], [1], None, [HAIR]),
     ("trusy", "legs/shorts/legs_shorts_short.json", [1], None, [("cloth", "white", "navy")]),
 ] + [(k, V[k], [1], None, [HAIR]) for k in ("boroda", "brovi") if V[k]]
+# Не шмот: очки для выходного, страница и стол надевают их сами.
+EXTRA = [
+    ("ochki", "headwear/accessories/glasses/facial_glasses_sunglasses.json", [1], "sunglasses", None),
+]
 # Форма героя -> тип тела LPC. Если у предмета нет слоя под тело, берём ближайший (FALLBACK).
 FORMS = {"dryshch": "teen", "norma": "male", "atlet": "muscular"}
 FALLBACK = {"teen": ["teen", "male"], "male": ["male"], "muscular": ["muscular", "male"]}
@@ -121,7 +126,8 @@ def sheet(lpc, base_path, anim, variant):
 
 
 def build_std(lpc, base_path, variant, spec):
-    rows = [("walk", SOUTH, 9), ("slash", SOUTH, 6), ("hurt", 0, 6), ("walk", WEST, 9), ("walk", EAST, 9)]
+    rows = [("walk", SOUTH, 9), ("slash", SOUTH, 6), ("hurt", 0, 6), ("walk", WEST, 9), ("walk", EAST, 9),
+            ("sit", SOUTH, 3)]
     strip = Image.new("RGBA", (9 * F, len(rows) * F))
     found = []
     for row, (anim, src_row, n) in enumerate(rows):
@@ -156,9 +162,9 @@ def main():
     OUT.mkdir(exist_ok=True)
     for old in OUT.glob("*.webp"):
         old.unlink()
-    manifest = {"forms": FORMS, "base": [], "items": {}, "fallbacks": []}
+    manifest = {"forms": FORMS, "base": [], "items": {}, "extra": {}, "fallbacks": []}
     credits = []
-    for group, key in ((BASE, "base"), (ITEMS, "items")):
+    for group, key in ((BASE, "base"), (ITEMS, "items"), (EXTRA, "extra")):
         for name, defn, layers, variant, spec in group:
             d = json.loads((lpc / "sheet_definitions" / defn).read_text())
             out_layers, used = [], set()
@@ -190,7 +196,7 @@ def main():
             if key == "base":
                 manifest["base"].extend(out_layers)
             else:
-                manifest["items"][name] = out_layers
+                manifest[key][name] = out_layers
             for c in d.get("credits", []):
                 cf = c["file"].rstrip("/")
                 if any(u.startswith(cf + "/") or u.rstrip("/") == cf or cf.startswith(u.rstrip("/")) for u in used):

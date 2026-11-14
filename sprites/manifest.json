@@ -15,7 +15,8 @@
    "anims": [
     "walk",
     "slash",
-    "hurt"
+    "hurt",
+    "sit"
    ]
   },
   {
@@ -28,7 +29,8 @@
    "anims": [
     "walk",
     "slash",
-    "hurt"
+    "hurt",
+    "sit"
    ]
   },
   {
@@ -41,7 +43,8 @@
    "anims": [
     "walk",
     "slash",
-    "hurt"
+    "hurt",
+    "sit"
    ]
   },
   {
@@ -54,7 +57,8 @@
    "anims": [
     "walk",
     "slash",
-    "hurt"
+    "hurt",
+    "sit"
    ]
   }
  ],
@@ -70,7 +74,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -85,7 +90,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -100,7 +106,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -115,7 +122,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -130,7 +138,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -145,7 +154,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -160,7 +170,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -175,7 +186,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -190,7 +202,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -205,7 +218,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -332,7 +346,8 @@
     },
     "z": 2,
     "anims": [
-     "walk"
+     "walk",
+     "sit"
     ]
    },
    {
@@ -345,7 +360,8 @@
     "anims": [
      "walk",
      "slash",
-     "hurt"
+     "hurt",
+     "sit"
     ]
    }
   ],
@@ -388,6 +404,24 @@
      "walk",
      "slash",
      "hurt"
+    ]
+   }
+  ]
+ },
+ "extra": {
+  "ochki": [
+   {
+    "f": {
+     "dryshch": "ochki_1",
+     "norma": "ochki_1",
+     "atlet": "ochki_1"
+    },
+    "z": 115,
+    "anims": [
+     "walk",
+     "slash",
+     "hurt",
+     "sit"
     ]
    }
   ]
@@ -1083,6 +1117,25 @@
    "urls": [
     "https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more",
     "https://opengameart.org/content/lpc-roman-armor"
+   ],
+   "notes": ""
+  },
+  {
+   "item": "ochki",
+   "name": "Sunglasses",
+   "file": "facial/glasses/sunglasses",
+   "authors": [
+    "Michael Whitlock (bigbeargames)",
+    "Thane Brimhall (pennomi)",
+    "laetissima"
+   ],
+   "licenses": [
+    "CC-BY-SA 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/lpc-base-character-expressions",
+    "https://opengameart.org/content/lpc-expanded-hats-facial-helmets"
    ],
    "notes": ""
   }

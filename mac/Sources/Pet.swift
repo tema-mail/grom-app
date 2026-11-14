@@ -2,7 +2,8 @@ import AppKit
 import ImageIO
 
 /// Герой на рабочем столе: прозрачное окно без рамки поверх всех окон, фокус не забирает.
-/// Ходит по горизонтали (внизу экрана, пока его не перетащили), иногда стоит; в выходной и в нокауте лежит.
+/// Ходит по горизонтали (внизу экрана, пока его не перетащили), иногда стоит или садится отдохнуть в очках.
+/// Лёжа не бывает (Артём 15.11): выходной – сидит вальяжно в солнцезащитных очках, нокаут – на колене, тяжело дышит.
 /// Нажатие – облачко «Хули надо?», второе нажатие, пока облачко висит, – окно характеристик.
 /// Слои те же, что на странице: sprites/manifest.json и *.webp с GitHub Pages, тело по форме из state.json.
 
@@ -16,6 +17,7 @@ struct PetLayer {
 final class PetSprites {
     private(set) var base: [PetLayer] = []
     private(set) var items: [String: [PetLayer]] = [:]
+    private(set) var extra: [String: [PetLayer]] = [:]
     private(set) var images: [String: CGImage] = [:]
 
     func load(from root: URL, completion: @escaping () -> Void) {
@@ -32,7 +34,9 @@ final class PetSprites {
             let base = layers(m["base"])
             var items: [String: [PetLayer]] = [:]
             for (id, raw) in m["items"] as? [String: Any] ?? [:] { items[id] = layers(raw) }
-            let names = Set((base + items.values.flatMap { $0 }).flatMap { $0.files.values })
+            var extra: [String: [PetLayer]] = [:]
+            for (id, raw) in m["extra"] as? [String: Any] ?? [:] { extra[id] = layers(raw) }
+            let names = Set((base + items.values.flatMap { $0 } + extra.values.flatMap { $0 }).flatMap { $0.files.values })
             var images: [String: CGImage] = [:]
             let lock = NSLock()
             let group = DispatchGroup()
@@ -48,6 +52,7 @@ final class PetSprites {
             group.notify(queue: .main) {
                 self.base = base
                 self.items = items
+                self.extra = extra
                 self.images = images
                 completion()
             }
@@ -59,7 +64,8 @@ final class PetSprites {
 enum PetPose: Equatable {
     case walk(dir: Int) // -1 влево, 1 вправо
     case stand
-    case lie
+    case relax   // сидит вальяжно в очках, чуть покачивается
+    case knocked // нокаут: на колене, тяжело дышит
 }
 
 final class PetView: NSView {
@@ -92,18 +98,22 @@ final class PetView: NSView {
         if let sprites {
             let (anim, row, col): (String, Int, Int) = {
                 switch pose {
-                case .lie: return ("hurt", 2, 5)
+                case .knocked: return ("hurt", 2, 1 + (tick / 6) % 2)
+                case .relax: return ("sit", 5, 0)
                 case .stand: return ("walk", 0, 0)
                 case .walk(let dir): return ("walk", dir < 0 ? 3 : 4, 1 + tick % 8)
                 }
             }()
+            var rect = spriteRect
+            if pose == .relax { rect.origin.y += CGFloat((tick / 7) % 2) * Self.scale }
             var layers = sprites.base
+            if pose == .relax { layers += sprites.extra["ochki"] ?? [] }
             for id in naryad.values { layers += sprites.items[id] ?? [] }
             for L in layers.sorted(by: { $0.z < $1.z }) where L.anims.contains(anim) {
                 guard let name = L.files[forma] ?? L.files["norma"], let img = sprites.images[name],
                       let cell = img.cropping(to: CGRect(x: col * Self.frame, y: row * Self.frame,
                                                          width: Self.frame, height: Self.frame)) else { continue }
-                ctx.draw(cell, in: spriteRect)
+                ctx.draw(cell, in: rect)
             }
         }
         if let bubble { drawBubble(bubble, above: spriteRect) }
@@ -169,7 +179,8 @@ final class PetController {
     private let sprites = PetSprites()
     private var timer: Timer?
     private var ticksLeft = 0
-    private var resting = false
+    private var knocked = false
+    private var dayOff = false
     private var bubbleUntil = Date.distantPast
     var onOpenStats: (() -> Void)?
 
@@ -206,9 +217,15 @@ final class PetController {
         for (slot, id) in state["naryad"] as? [String: Any] ?? [:] { if let id = id as? String { n[slot] = id } }
         view.naryad = n
         let saturday = Calendar.current.component(.weekday, from: Date()) == 7
-        resting = (state["nokaut"] as? Bool ?? false) || (state["vyhodnoy"] as? Bool ?? false) || saturday
-        // проверка прогулки в выходной: GROM_PET_WALK=1 ~/Applications/Grom.app/Contents/MacOS/Grom
-        if ProcessInfo.processInfo.environment["GROM_PET_WALK"] == "1", !(state["nokaut"] as? Bool ?? false) { resting = false }
+        knocked = state["nokaut"] as? Bool ?? false
+        dayOff = (state["vyhodnoy"] as? Bool ?? false) || saturday
+        // проверка поз без бота: GROM_PET_MODE=walk|vyhodnoy|nokaut ~/Applications/Grom.app/Contents/MacOS/Grom
+        switch ProcessInfo.processInfo.environment["GROM_PET_MODE"] {
+        case "walk": knocked = false; dayOff = false
+        case "vyhodnoy": knocked = false; dayOff = true
+        case "nokaut": knocked = true
+        default: break
+        }
         view.needsDisplay = true
     }
 
@@ -228,8 +245,11 @@ final class PetController {
     private func tick() {
         var changed = false
         if view.bubble != nil, Date() >= bubbleUntil { view.bubble = nil; changed = true }
-        if resting {
-            if view.pose != .lie { view.pose = .lie; changed = true }
+        if knocked || dayOff {
+            let pose: PetPose = knocked ? .knocked : .relax
+            if view.pose != pose { view.pose = pose; changed = true }
+            view.tick += 1
+            if view.tick % 6 == 0 || view.tick % 7 == 0 { changed = true } // дыхание и покачивание
         } else if view.isDragging {
             if view.pose != .stand { view.pose = .stand; changed = true }
         } else {
@@ -241,10 +261,15 @@ final class PetController {
     /// Шаг прогулки. Возвращает true, если кадр поменялся.
     private func move() -> Bool {
         if ticksLeft <= 0 {
-            // по очереди: идёт 3–8 с, стоит 2–6 с
+            // по очереди: идёт 3–8 с, потом стоит 2–6 с или садится отдохнуть в очках на 10–20 с
             if case .walk = view.pose {
-                view.pose = .stand
-                ticksLeft = Int(Double.random(in: 2...6) * Self.fps)
+                if Double.random(in: 0...1) < 0.3 {
+                    view.pose = .relax
+                    ticksLeft = Int(Double.random(in: 10...20) * Self.fps)
+                } else {
+                    view.pose = .stand
+                    ticksLeft = Int(Double.random(in: 2...6) * Self.fps)
+                }
             } else {
                 view.pose = .walk(dir: Bool.random() ? 1 : -1)
                 ticksLeft = Int(Double.random(in: 3...8) * Self.fps)
@@ -252,6 +277,7 @@ final class PetController {
             return true
         }
         ticksLeft -= 1
+        if view.pose == .relax { view.tick += 1; return view.tick % 7 == 0 }
         guard case .walk(var dir) = view.pose else { return false }
         let screen = panel.screen ?? NSScreen.main ?? NSScreen.screens[0]
         let bounds = screen.visibleFrame

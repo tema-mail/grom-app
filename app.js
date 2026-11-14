@@ -177,7 +177,8 @@
   // ---------- отрисовка ----------
   function render() {
     var s = state;
-    window.GromHero.set(s.naryad || {}, !!s.nokaut, s.forma);
+    window.GromHero.set(s.naryad || {}, !!s.nokaut, s.forma, !!s.vyhodnoy);
+    $("otdyh").hidden = !s.vyhodnoy || !!s.nokaut;
     $("forma").textContent = FORMA[s.forma] || "–";
     var trn = "тренировок: " + num(s.trenirovok);
     if (s.do_formy === null) trn += " · последняя форма";

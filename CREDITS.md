@@ -281,3 +281,10 @@
 - Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
 - https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more
 - https://opengameart.org/content/lpc-roman-armor
+
+## ochki – Sunglasses (`facial/glasses/sunglasses`)
+
+- Авторы: Michael Whitlock (bigbeargames), Thane Brimhall (pennomi), laetissima
+- Лицензии: CC-BY-SA 3.0, GPL 3.0
+- https://opengameart.org/content/lpc-base-character-expressions
+- https://opengameart.org/content/lpc-expanded-hats-facial-helmets
