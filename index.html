@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Гром – герой</title>
+<meta name="description" content="Герой игры «Гром»: уровень, здоровье, челленджи, босс и магазин.">
+<link rel="icon" href="icon.webp" type="image/webp">
+<script>
+// тема до отрисовки, чтобы не мигало: выбор с кнопки, иначе вечер 19–7 или тёмная тема системы
+(function () {
+  var t = null;
+  try { t = localStorage.getItem("tema"); } catch (e) {}
+  if (t !== "dark" && t !== "light") {
+    var h = new Date().getHours();
+    var sys = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    t = (h >= 19 || h < 7 || sys) ? "dark" : "light";
+  }
+  document.documentElement.setAttribute("data-theme", t);
+})();
+</script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button id="tema-btn" type="button" aria-label="Сменить тему"></button>
+
+<main class="wrap">
+  <header class="top">
+    <h1>Гром</h1>
+    <span id="demo" class="badge" hidden>Демо</span>
+    <span id="ts" class="muted small"></span>
+  </header>
+
+  <div id="offline" class="plashka warn" hidden>Нет связи с сервером – показано последнее известное состояние.</div>
+  <div id="toast" class="plashka" hidden></div>
+
+  <section class="card hero-card">
+    <div class="hero-stage">
+      <canvas id="hero" aria-label="Герой"></canvas>
+      <div id="nokaut" class="nokaut" hidden>Нокаут</div>
+    </div>
+    <div class="stats">
+      <div class="lvl">Уровень <b id="uroven">–</b></div>
+      <div class="bar-row">
+        <span class="lbl">Здоровье</span>
+        <div class="bar hp"><i id="hp-bar"></i></div>
+        <span id="hp-txt" class="num"></span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">Опыт</span>
+        <div class="bar xp"><i id="xp-bar"></i></div>
+        <span id="xp-txt" class="num"></span>
+      </div>
+      <div class="chips">
+        <span class="chip"><span class="coin" aria-hidden="true"></span><b id="monety">0</b> монет</span>
+        <span class="chip">Серия <b id="seriya">0</b> дн.</span>
+        <span id="vyhodnoy" class="chip soft" hidden>Выходной</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card replika-card">
+    <div class="who">Гром</div>
+    <p id="replika" class="replika"></p>
+  </section>
+
+  <section class="card">
+    <h2>Сегодня <span id="den-zakryt" class="badge ok" hidden>День закрыт</span></h2>
+    <ul id="sobytiya" class="events"></ul>
+  </section>
+
+  <section class="card">
+    <h2>Челленджи</h2>
+    <div id="chellendzhi" class="list"></div>
+  </section>
+
+  <section class="card boss-card">
+    <h2>Босс</h2>
+    <div id="boss"></div>
+  </section>
+
+  <section class="card">
+    <h2>Магазин</h2>
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab active" data-tab="shmot" role="tab">Шмот</button>
+      <button type="button" class="tab" data-tab="nagrada" role="tab">Награды</button>
+    </div>
+    <div id="shop" class="shop"></div>
+    <p id="action-hint" class="muted small" hidden>Действия работают в Telegram и в приложении на маке.</p>
+  </section>
+
+  <section class="card">
+    <details id="avtory">
+      <summary>Авторы графики</summary>
+      <p class="muted small">Герой и шмот – спрайты Liberated Pixel Cup из
+        <a href="https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator" target="_blank" rel="noopener">Universal LPC Spritesheet Character Generator</a>.
+        Ниже авторы и лицензии ровно тех файлов, что взяты на эту страницу. Подробно – в
+        <a href="https://github.com/tema-mail/grom-app/blob/main/CREDITS.md" target="_blank" rel="noopener">CREDITS.md</a>.</p>
+      <div id="credits"></div>
+    </details>
+  </section>
+</main>
+
+<script src="hero.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
