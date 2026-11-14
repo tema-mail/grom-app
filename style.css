@@ -111,6 +111,13 @@ h2 { font-size: 18px; margin: 0 0 10px; display: flex; align-items: center; gap:
   background: var(--hp); color: #fff; font-weight: 700; font-size: 13px;
   padding: 3px 10px; border-radius: 999px;
 }
+.forma-up {
+  position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+  background: var(--ok); color: #fff; font-weight: 700; font-size: 15px;
+  padding: 5px 14px; border-radius: 999px; white-space: nowrap;
+  animation: forma-in .4s ease-out;
+}
+@keyframes forma-in { from { transform: translate(-50%, 12px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
 .stats { margin-top: 12px; display: grid; gap: 8px; }
 .lvl { font-size: 15px; }
 .lvl b { font-size: 20px; }

@@ -19,6 +19,37 @@
 - https://opengameart.org/content/lpc-character-bases
 - Примечание: see details at https://opengameart.org/content/lpc-character-bases; 'Thick' Male Revised Run/Climb by JaidynReiman (based on ElizaWy's LPC Revised)
 
+## body – Body Color (`body/bodies/muscular`)
+
+- Авторы: bluecarrot16, JaidynReiman, Evert, TheraHedwig, MuffinElZangano, Durrani, Sander Frenken (castelonia), Benjamin K. Smith (BenCreating), Eliza Wyatt (ElizaWy), dalonedrau, Stephen Challener (Redshrike)
+- Лицензии: CC-BY-SA 3.0, GPL 3.0
+- https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+- https://opengameart.org/content/lpc-barbarian-sprite-base
+- https://opengameart.org/content/lpc-muscular-swing-animation
+- https://opengameart.org/content/lpc-muscular-hurt-animation
+- https://opengameart.org/content/lpc-jump-expanded
+- https://opengameart.org/content/lpc-revised-character-basics
+- https://opengameart.org/content/lpc-be-seated
+- https://opengameart.org/content/lpc-jump-expanded
+- https://opengameart.org/content/lpc-character-bases
+- https://opengameart.org/content/lpc-male-jumping-animation-by-durrani
+- Примечание: see details at https://opengameart.org/content/lpc-character-bases
+
+## body – Body Color (`body/bodies/teen`)
+
+- Авторы: bluecarrot16, Evert, TheraHedwig, Benjamin K. Smith (BenCreating), MuffinElZangano, Durrani, Pierre Vigier (pvigier), Eliza Wyatt (ElizaWy), Matthew Krohn (makrohn), Johannes Sjölund (wulax), Stephen Challener (Redshrike)
+- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
+- https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+- https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+- https://opengameart.org/content/lpc-ladies
+- https://opengameart.org/content/lpc-teen-unisex-base-clothes
+- https://opengameart.org/content/lpc-jump-expanded
+- https://opengameart.org/content/lpc-revised-character-basics
+- https://opengameart.org/content/lpc-be-seated
+- https://gitlab.com/vagabondgame/lpc-characters
+- https://opengameart.org/content/lpc-male-jumping-animation-by-durrani
+- https://opengameart.org/content/lpc-jump-expanded
+
 ## head – Human Male (`head/heads/human/male`)
 
 - Авторы: bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike)
@@ -35,7 +66,50 @@
 - https://opengameart.org/content/ponytail-and-plain-hairstyles
 - https://opengameart.org/content/lpc-expanded-hair
 
-## shirt – Longsleeve (`torso/clothes/longsleeve/longsleeve/male`)
+## trusy – Short Shorts (`legs/shorts/short_shorts/male`)
+
+- Авторы: JaidynReiman, ElizaWy, Bluecarrot16, Johannes Sjölund (wulax), Stephen Challener (Redshrike)
+- Лицензии: OGA-BY 3.0, GPL 3.0
+- https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing
+- https://opengameart.org/content/lpc-expanded-pants
+- Примечание: Original bases by Redshrike, thrust/shoot bases by Wulax, original overalls and shorts by ElizaWy, base animations adapted from v3 overalls by bluecarrot16, shorts by JaidynReiman
+
+## trusy – Short Shorts (`legs/shorts/short_shorts`)
+
+- Авторы: ElizaWy, JaidynReiman, Johannes Sjölund (wulax), Stephen Challener (Redshrike)
+- Лицензии: OGA-BY 3.0
+- https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing
+- https://opengameart.org/content/lpc-expanded-sit-run-jump-more
+- https://opengameart.org/content/lpc-expanded-pants
+- Примечание: Original bases by Redshrike, thrust/shoot bases by Wulax, original shorts by ElizaWy, climb/jump/run/sit/emotes/revised combat by JaidynReiman
+
+## mayka – Original Sleeveless (`torso/clothes/sleeveless/sleeveless1/male`)
+
+- Авторы: bluecarrot16, ElizaWy, JaidynReiman, Stephen Challener (Redshrike)
+- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
+- https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+- http://opengameart.org/content/lpc-revised-character-basics
+- http://opengameart.org/content/lpc-clothing-updates
+- https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing
+- https://opengameart.org/content/lpc-expanded-sit-run-jump-more
+- https://opengameart.org/content/lpc-expanded-simple-shirts
+- Примечание: original by ElizaWy walkcycle only; extended to all animations by adapting from longsleeve, edited to v3 bases by bluecarrot16; sleeveless variant by JaidynReiman
+
+## mayka – Original Sleeveless (`torso/clothes/sleeveless/sleeveless1/teen`)
+
+- Авторы: Nyom, bluecarrot16, ElizaWy, JaidynReiman, Stephen Challener (Redshrike)
+- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
+- https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+- https://opengameart.org/content/lpc-7-womens-shirts
+- http://opengameart.org/content/lpc-revised-character-basics
+- http://opengameart.org/content/lpc-clothing-updates
+- https://opengameart.org/content/lpc-teen-androgynous-short-sleeve-shirt
+- https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing
+- https://opengameart.org/content/lpc-expanded-sit-run-jump-more
+- https://opengameart.org/content/lpc-expanded-simple-shirts
+- Примечание: original by ElizaWy walkcycle only; extended to all animations by adapting from longsleeve, edited to v3 bases by bluecarrot16; sleeveless variant by JaidynReiman
+
+## rubashka – Longsleeve (`torso/clothes/longsleeve/longsleeve/male`)
 
 - Авторы: JaidynReiman, Johannes Sjölund (wulax)
 - Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
@@ -47,7 +121,20 @@
 - https://opengameart.org/content/lpc-expanded-simple-shirts
 - Примечание: original by wulax; tweaks and further recolors by bluecarrot16; cleanup and climb/jump/run/sit/emote/revised combat adapted from LPC Revised by JaidynReiman
 
-## pants – Pants (`legs/pants/male`)
+## rubashka – Longsleeve (`torso/clothes/longsleeve/longsleeve/teen`)
+
+- Авторы: bluecarrot16, ElizaWy, JaidynReiman, Stephen Challener (Redshrike), Johannes Sjölund (wulax)
+- Лицензии: OGA-BY 3.0, GPL 3.0
+- https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+- https://opengameart.org/content/lpc-teen-unisex-base-clothes
+- http://opengameart.org/content/lpc-clothing-updates
+- https://opengameart.org/content/lpc-revised-character-basics
+- https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing
+- https://opengameart.org/content/lpc-expanded-sit-run-jump-more
+- https://opengameart.org/content/lpc-expanded-simple-shirts
+- Примечание: body by Redshrike, shirt by ElizaWy derived from base, edited by bluecarrot16 to v3 bases; cleanup and climb/jump/run/sit/emote/revised combat adapted from LPC Revised by JaidynReiman
+
+## shtany – Pants (`legs/pants/male`)
 
 - Авторы: bluecarrot16, JaidynReiman, ElizaWy, Matthew Krohn (makrohn), Johannes Sjölund (wulax), Stephen Challener (Redshrike)
 - Лицензии: OGA-BY 3.0, GPL 3.0, CC-BY-SA 3.0
@@ -56,14 +143,31 @@
 - https://opengameart.org/content/lpc-expanded-pants
 - Примечание: original male pants by wulax, recolors and edits to v3 base by bluecarrot16, climb/jump/run/sit/emotes/revised combat by JaidynReiman based on ElizaWy's LPC Revised
 
-## shoes – Basic Shoes (`feet/shoes`)
+## shtany – Pants (`legs/pants/thin`)
 
-- Авторы: JaidynReiman, bluecarrot16, Johannes Sjölund (wulax)
-- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
+- Авторы: bluecarrot16, JaidynReiman, ElizaWy, Joe White, Matthew Krohn (makrohn), Johannes Sjölund (wulax), Stephen Challener (Redshrike)
+- Лицензии: OGA-BY 3.0, GPL 3.0, CC-BY-SA 3.0
+- https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
 - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 - http://opengameart.org/content/lpc-clothing-updates
+- https://opengameart.org/content/lpc-expanded-pants
+- Примечание: original male pants by wulax, edited for female by Joe White, recolors and edits to v3 base by bluecarrot16, teen legs by ElizaWy derived from base, climb/jump/run/sit/emotes/revised combat by JaidynReiman based on ElizaWy's LPC Revised
+
+## botinki – Basic Boots (`feet/boots/basic`)
+
+- Авторы: JaidynReiman, bluecarrot16, Nila122
+- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 2.0, GPL 3.0
+- https://opengameart.org/content/lpc-clothes-and-hair
 - https://opengameart.org/content/lpc-expanded-socks-shoes
-- Примечание: original by wulax, edited for v3 base by bluecarrot16, Jump/Sit/Emote/Run/Revised Combat by JaidynReiman
+- Примечание: original by Nila122, edited for male and v3 bases by bluecarrot16, Jump/Sit/Emote/Run/Revised Combat by JaidynReiman
+
+## botinki – Basic Boots (`feet/boots/basic/thin`)
+
+- Авторы: JaidynReiman, bluecarrot16, Nila122
+- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 2.0, GPL 3.0
+- https://opengameart.org/content/lpc-clothes-and-hair
+- https://opengameart.org/content/lpc-expanded-socks-shoes
+- Примечание: original by Nila122, edited for v3 bases by bluecarrot16, Jump/Sit/Emote/Run/Revised Combat by JaidynReiman
 
 ## shlem_kozha – Leather Cap (`hat/cloth/leather_cap`)
 
@@ -97,6 +201,16 @@
 - https://opengameart.org/content/lpc-expanded-armor
 - Примечание: adapted to v3 bases by bluecarrot16, reduced colors and climb/emote/jump by JaidynReiman
 
+## kurtka_kozha – Leather (`torso/armour/leather/teen`)
+
+- Авторы: Michael Whitlock (bigbeargames), Matthew Krohn (makrohn), Johannes Sjölund (wulax), bluecarrot16, JaidynReiman
+- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
+- https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+- https://opengameart.org/content/lpc-combat-armor-for-women
+- https://opengameart.org/content/lpc-clothing-updates
+- https://opengameart.org/content/lpc-expanded-armor
+- Примечание: adapted to v3 bases by bluecarrot16, teen version by JaidynReiman adapted from Male and Female versions
+
 ## kolchuga – Chainmail (`torso/chainmail`)
 
 - Авторы: Johannes Sjölund (wulax), Napsio (Vitruvian Studio), JaidynReiman
@@ -111,6 +225,14 @@
 - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 - https://opengameart.org/content/lpc-combat-armor-for-women
 - Примечание: original by wulax, recolor by bigbeargames, color reduced to 7 colors and adapted to v3 bases by bluecarrot16, run/jump/sit/climb/revised combat by JaidynReiman, reduced colors to 6 (based on Napsio's Vitruvian)
+
+## laty – Plate (`torso/armour/plate/teen`)
+
+- Авторы: JaidynReiman, bluecarrot16, Michael Whitlock (bigbeargames), Johannes Sjölund (wulax)
+- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
+- https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+- https://opengameart.org/content/lpc-combat-armor-for-women
+- Примечание: original by wulax, color reduced to 7 colors and adapted to v3 bases by bluecarrot16, adapted to teen base from male/female by JaidynReiman
 
 ## kinzhal – Dagger (`weapon/sword/dagger`)
 

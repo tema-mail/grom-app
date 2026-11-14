@@ -2,19 +2,23 @@
 """Иконка «Гром» из головы героя LPC: icon.webp для страницы и mac/build/icon-1024.png для icns.
 Запуск после tools/sprites.py: python3 tools/icon.py"""
 from pathlib import Path
+import json
+
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
 S = ROOT / "sprites"
 
 
-def head():
+def head(forma="dryshch"):
+    base = sorted(json.loads((S / "manifest.json").read_text())["base"], key=lambda L: L["z"])
     fr = Image.new("RGBA", (64, 64))
-    for n in ("body_1", "shirt_1", "head_1", "hair_1"):
-        fr.alpha_composite(Image.open(S / f"{n}.webp").convert("RGBA").crop((0, 0, 64, 64)))
     hd = Image.new("RGBA", (64, 64))
-    for n in ("head_1", "hair_1"):
-        hd.alpha_composite(Image.open(S / f"{n}.webp").convert("RGBA").crop((0, 0, 64, 64)))
+    for L in base:
+        im = Image.open(S / f"{L['f'][forma]}.webp").convert("RGBA").crop((0, 0, 64, 64))
+        fr.alpha_composite(im)
+        if L["z"] >= 100:  # голова, волосы, борода, брови
+            hd.alpha_composite(im)
     x0, y0, x1, y1 = hd.getbbox()
     y1 = min(y1 + 2, 64)  # немного шеи и плеч
     w = max(x1 - x0, y1 - y0)

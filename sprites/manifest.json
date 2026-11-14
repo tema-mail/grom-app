@@ -1,7 +1,16 @@
 {
+ "forms": {
+  "dryshch": "teen",
+  "norma": "male",
+  "atlet": "muscular"
+ },
  "base": [
   {
-   "f": "body_1",
+   "f": {
+    "dryshch": "body_1_teen",
+    "norma": "body_1_male",
+    "atlet": "body_1_muscular"
+   },
    "z": 10,
    "anims": [
     "walk",
@@ -10,7 +19,11 @@
    ]
   },
   {
-   "f": "head_1",
+   "f": {
+    "dryshch": "head_1",
+    "norma": "head_1",
+    "atlet": "head_1"
+   },
    "z": 100,
    "anims": [
     "walk",
@@ -19,7 +32,11 @@
    ]
   },
   {
-   "f": "hair_1",
+   "f": {
+    "dryshch": "hair_1",
+    "norma": "hair_1",
+    "atlet": "hair_1"
+   },
    "z": 120,
    "anims": [
     "walk",
@@ -28,26 +45,12 @@
    ]
   },
   {
-   "f": "shirt_1",
-   "z": 35,
-   "anims": [
-    "walk",
-    "slash",
-    "hurt"
-   ]
-  },
-  {
-   "f": "pants_1",
+   "f": {
+    "dryshch": "trusy_1_teen",
+    "norma": "trusy_1_male",
+    "atlet": "trusy_1_male"
+   },
    "z": 20,
-   "anims": [
-    "walk",
-    "slash",
-    "hurt"
-   ]
-  },
-  {
-   "f": "shoes_1",
-   "z": 15,
    "anims": [
     "walk",
     "slash",
@@ -56,9 +59,73 @@
   }
  ],
  "items": {
+  "mayka": [
+   {
+    "f": {
+     "dryshch": "mayka_1_teen",
+     "norma": "mayka_1_male",
+     "atlet": "mayka_1_male"
+    },
+    "z": 35,
+    "anims": [
+     "walk",
+     "slash",
+     "hurt"
+    ]
+   }
+  ],
+  "rubashka": [
+   {
+    "f": {
+     "dryshch": "rubashka_1_teen",
+     "norma": "rubashka_1_male",
+     "atlet": "rubashka_1_male"
+    },
+    "z": 35,
+    "anims": [
+     "walk",
+     "slash",
+     "hurt"
+    ]
+   }
+  ],
+  "shtany": [
+   {
+    "f": {
+     "dryshch": "shtany_1_teen",
+     "norma": "shtany_1_male",
+     "atlet": "shtany_1_male"
+    },
+    "z": 20,
+    "anims": [
+     "walk",
+     "slash",
+     "hurt"
+    ]
+   }
+  ],
+  "botinki": [
+   {
+    "f": {
+     "dryshch": "botinki_1_teen",
+     "norma": "botinki_1_male",
+     "atlet": "botinki_1_male"
+    },
+    "z": 25,
+    "anims": [
+     "walk",
+     "slash",
+     "hurt"
+    ]
+   }
+  ],
   "shlem_kozha": [
    {
-    "f": "shlem_kozha_1",
+    "f": {
+     "dryshch": "shlem_kozha_1",
+     "norma": "shlem_kozha_1",
+     "atlet": "shlem_kozha_1"
+    },
     "z": 130,
     "anims": [
      "walk",
@@ -69,7 +136,11 @@
   ],
   "shlem_zhelezo": [
    {
-    "f": "shlem_zhelezo_1",
+    "f": {
+     "dryshch": "shlem_zhelezo_1",
+     "norma": "shlem_zhelezo_1",
+     "atlet": "shlem_zhelezo_1"
+    },
     "z": 130,
     "anims": [
      "walk",
@@ -80,7 +151,11 @@
   ],
   "korona": [
    {
-    "f": "korona_1",
+    "f": {
+     "dryshch": "korona_1",
+     "norma": "korona_1",
+     "atlet": "korona_1"
+    },
     "z": 130,
     "anims": [
      "walk",
@@ -91,7 +166,11 @@
   ],
   "kurtka_kozha": [
    {
-    "f": "kurtka_kozha_1",
+    "f": {
+     "dryshch": "kurtka_kozha_1_teen",
+     "norma": "kurtka_kozha_1_male",
+     "atlet": "kurtka_kozha_1_male"
+    },
     "z": 60,
     "anims": [
      "walk",
@@ -102,7 +181,11 @@
   ],
   "kolchuga": [
    {
-    "f": "kolchuga_1",
+    "f": {
+     "dryshch": "kolchuga_1_teen",
+     "norma": "kolchuga_1_male",
+     "atlet": "kolchuga_1_male"
+    },
     "z": 50,
     "anims": [
      "walk",
@@ -113,7 +196,11 @@
   ],
   "laty": [
    {
-    "f": "laty_1",
+    "f": {
+     "dryshch": "laty_1_teen",
+     "norma": "laty_1_male",
+     "atlet": "laty_1_male"
+    },
     "z": 60,
     "anims": [
      "walk",
@@ -124,7 +211,11 @@
   ],
   "kinzhal": [
    {
-    "f": "kinzhal_1",
+    "f": {
+     "dryshch": "kinzhal_1",
+     "norma": "kinzhal_1",
+     "atlet": "kinzhal_1"
+    },
     "z": 140,
     "anims": [
      "walk",
@@ -133,7 +224,11 @@
     ]
    },
    {
-    "f": "kinzhal_2",
+    "f": {
+     "dryshch": "kinzhal_2",
+     "norma": "kinzhal_2",
+     "atlet": "kinzhal_2"
+    },
     "z": 9,
     "anims": [
      "walk",
@@ -143,7 +238,11 @@
   ],
   "mech": [
    {
-    "f": "mech_1",
+    "f": {
+     "dryshch": "mech_1",
+     "norma": "mech_1",
+     "atlet": "mech_1"
+    },
     "z": 140,
     "anims": [
      "walk",
@@ -151,7 +250,11 @@
     ]
    },
    {
-    "f": "mech_2",
+    "f": {
+     "dryshch": "mech_2",
+     "norma": "mech_2",
+     "atlet": "mech_2"
+    },
     "z": 9,
     "anims": [
      "walk",
@@ -159,26 +262,42 @@
     ]
    },
    {
-    "f": "mech_3",
+    "f": {
+     "dryshch": "mech_3",
+     "norma": "mech_3",
+     "atlet": "mech_3"
+    },
     "z": 8,
     "slash": 128
    },
    {
-    "f": "mech_4",
+    "f": {
+     "dryshch": "mech_4",
+     "norma": "mech_4",
+     "atlet": "mech_4"
+    },
     "z": 150,
     "slash": 128
    }
   ],
   "topor": [
    {
-    "f": "topor_1",
+    "f": {
+     "dryshch": "topor_1",
+     "norma": "topor_1",
+     "atlet": "topor_1"
+    },
     "z": 9,
     "anims": [
      "walk"
     ]
    },
    {
-    "f": "topor_2",
+    "f": {
+     "dryshch": "topor_2",
+     "norma": "topor_2",
+     "atlet": "topor_2"
+    },
     "z": 140,
     "anims": [
      "walk",
@@ -186,26 +305,42 @@
     ]
    },
    {
-    "f": "topor_3",
+    "f": {
+     "dryshch": "topor_3",
+     "norma": "topor_3",
+     "atlet": "topor_3"
+    },
     "z": 8,
     "slash": 192
    },
    {
-    "f": "topor_4",
+    "f": {
+     "dryshch": "topor_4",
+     "norma": "topor_4",
+     "atlet": "topor_4"
+    },
     "z": 150,
     "slash": 192
    }
   ],
   "shchit_derevo": [
    {
-    "f": "shchit_derevo_1",
+    "f": {
+     "dryshch": "shchit_derevo_1",
+     "norma": "shchit_derevo_1",
+     "atlet": "shchit_derevo_1"
+    },
     "z": 2,
     "anims": [
      "walk"
     ]
    },
    {
-    "f": "shchit_derevo_2",
+    "f": {
+     "dryshch": "shchit_derevo_2",
+     "norma": "shchit_derevo_2",
+     "atlet": "shchit_derevo_2"
+    },
     "z": 110,
     "anims": [
      "walk",
@@ -216,7 +351,11 @@
   ],
   "shchit_zhelezo": [
    {
-    "f": "shchit_zhelezo_1",
+    "f": {
+     "dryshch": "shchit_zhelezo_1",
+     "norma": "shchit_zhelezo_1",
+     "atlet": "shchit_zhelezo_1"
+    },
     "z": 110,
     "anims": [
      "walk",
@@ -226,7 +365,11 @@
   ],
   "plashch": [
    {
-    "f": "plashch_1",
+    "f": {
+     "dryshch": "plashch_1",
+     "norma": "plashch_1",
+     "atlet": "plashch_1"
+    },
     "z": 85,
     "anims": [
      "walk",
@@ -235,7 +378,11 @@
     ]
    },
    {
-    "f": "plashch_2",
+    "f": {
+     "dryshch": "plashch_2",
+     "norma": "plashch_2",
+     "atlet": "plashch_2"
+    },
     "z": 5,
     "anims": [
      "walk",
@@ -245,6 +392,21 @@
    }
   ]
  },
+ "fallbacks": [
+  "kinzhal слой 1: teen -> male",
+  "kinzhal слой 2: teen -> male",
+  "kolchuga слой 1: muscular -> male",
+  "kurtka_kozha слой 1: muscular -> male",
+  "laty слой 1: muscular -> male",
+  "mayka слой 1: muscular -> male",
+  "rubashka слой 1: muscular -> male",
+  "shchit_zhelezo слой 1: teen -> male",
+  "topor слой 1: teen -> male",
+  "topor слой 2: teen -> male",
+  "topor слой 3: teen -> male",
+  "topor слой 4: teen -> male",
+  "trusy слой 1: muscular -> male"
+ ],
  "credits": [
   {
    "item": "body",
@@ -279,6 +441,77 @@
     "https://opengameart.org/content/lpc-character-bases"
    ],
    "notes": "see details at https://opengameart.org/content/lpc-character-bases; 'Thick' Male Revised Run/Climb by JaidynReiman (based on ElizaWy's LPC Revised)"
+  },
+  {
+   "item": "body",
+   "name": "Body Color",
+   "file": "body/bodies/muscular",
+   "authors": [
+    "bluecarrot16",
+    "JaidynReiman",
+    "Evert",
+    "TheraHedwig",
+    "MuffinElZangano",
+    "Durrani",
+    "Sander Frenken (castelonia)",
+    "Benjamin K. Smith (BenCreating)",
+    "Eliza Wyatt (ElizaWy)",
+    "dalonedrau",
+    "Stephen Challener (Redshrike)"
+   ],
+   "licenses": [
+    "CC-BY-SA 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+    "https://opengameart.org/content/lpc-barbarian-sprite-base",
+    "https://opengameart.org/content/lpc-muscular-swing-animation",
+    "https://opengameart.org/content/lpc-muscular-hurt-animation",
+    "https://opengameart.org/content/lpc-jump-expanded",
+    "https://opengameart.org/content/lpc-revised-character-basics",
+    "https://opengameart.org/content/lpc-be-seated",
+    "https://opengameart.org/content/lpc-jump-expanded",
+    "https://opengameart.org/content/lpc-character-bases",
+    "https://opengameart.org/content/lpc-male-jumping-animation-by-durrani"
+   ],
+   "notes": "see details at https://opengameart.org/content/lpc-character-bases"
+  },
+  {
+   "item": "body",
+   "name": "Body Color",
+   "file": "body/bodies/teen",
+   "authors": [
+    "bluecarrot16",
+    "Evert",
+    "TheraHedwig",
+    "Benjamin K. Smith (BenCreating)",
+    "MuffinElZangano",
+    "Durrani",
+    "Pierre Vigier (pvigier)",
+    "Eliza Wyatt (ElizaWy)",
+    "Matthew Krohn (makrohn)",
+    "Johannes Sjölund (wulax)",
+    "Stephen Challener (Redshrike)"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "CC-BY-SA 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+    "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
+    "https://opengameart.org/content/lpc-ladies",
+    "https://opengameart.org/content/lpc-teen-unisex-base-clothes",
+    "https://opengameart.org/content/lpc-jump-expanded",
+    "https://opengameart.org/content/lpc-revised-character-basics",
+    "https://opengameart.org/content/lpc-be-seated",
+    "https://gitlab.com/vagabondgame/lpc-characters",
+    "https://opengameart.org/content/lpc-male-jumping-animation-by-durrani",
+    "https://opengameart.org/content/lpc-jump-expanded"
+   ],
+   "notes": ""
   },
   {
    "item": "head",
@@ -322,7 +555,101 @@
    "notes": ""
   },
   {
-   "item": "shirt",
+   "item": "trusy",
+   "name": "Short Shorts",
+   "file": "legs/shorts/short_shorts/male",
+   "authors": [
+    "JaidynReiman",
+    "ElizaWy",
+    "Bluecarrot16",
+    "Johannes Sjölund (wulax)",
+    "Stephen Challener (Redshrike)"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
+    "https://opengameart.org/content/lpc-expanded-pants"
+   ],
+   "notes": "Original bases by Redshrike, thrust/shoot bases by Wulax, original overalls and shorts by ElizaWy, base animations adapted from v3 overalls by bluecarrot16, shorts by JaidynReiman"
+  },
+  {
+   "item": "trusy",
+   "name": "Short Shorts",
+   "file": "legs/shorts/short_shorts",
+   "authors": [
+    "ElizaWy",
+    "JaidynReiman",
+    "Johannes Sjölund (wulax)",
+    "Stephen Challener (Redshrike)"
+   ],
+   "licenses": [
+    "OGA-BY 3.0"
+   ],
+   "urls": [
+    "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
+    "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+    "https://opengameart.org/content/lpc-expanded-pants"
+   ],
+   "notes": "Original bases by Redshrike, thrust/shoot bases by Wulax, original shorts by ElizaWy, climb/jump/run/sit/emotes/revised combat by JaidynReiman"
+  },
+  {
+   "item": "mayka",
+   "name": "Original Sleeveless",
+   "file": "torso/clothes/sleeveless/sleeveless1/male",
+   "authors": [
+    "bluecarrot16",
+    "ElizaWy",
+    "JaidynReiman",
+    "Stephen Challener (Redshrike)"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "CC-BY-SA 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+    "http://opengameart.org/content/lpc-revised-character-basics",
+    "http://opengameart.org/content/lpc-clothing-updates",
+    "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
+    "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+    "https://opengameart.org/content/lpc-expanded-simple-shirts"
+   ],
+   "notes": "original by ElizaWy walkcycle only; extended to all animations by adapting from longsleeve, edited to v3 bases by bluecarrot16; sleeveless variant by JaidynReiman"
+  },
+  {
+   "item": "mayka",
+   "name": "Original Sleeveless",
+   "file": "torso/clothes/sleeveless/sleeveless1/teen",
+   "authors": [
+    "Nyom",
+    "bluecarrot16",
+    "ElizaWy",
+    "JaidynReiman",
+    "Stephen Challener (Redshrike)"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "CC-BY-SA 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+    "https://opengameart.org/content/lpc-7-womens-shirts",
+    "http://opengameart.org/content/lpc-revised-character-basics",
+    "http://opengameart.org/content/lpc-clothing-updates",
+    "https://opengameart.org/content/lpc-teen-androgynous-short-sleeve-shirt",
+    "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
+    "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+    "https://opengameart.org/content/lpc-expanded-simple-shirts"
+   ],
+   "notes": "original by ElizaWy walkcycle only; extended to all animations by adapting from longsleeve, edited to v3 bases by bluecarrot16; sleeveless variant by JaidynReiman"
+  },
+  {
+   "item": "rubashka",
    "name": "Longsleeve",
    "file": "torso/clothes/longsleeve/longsleeve/male",
    "authors": [
@@ -345,7 +672,33 @@
    "notes": "original by wulax; tweaks and further recolors by bluecarrot16; cleanup and climb/jump/run/sit/emote/revised combat adapted from LPC Revised by JaidynReiman"
   },
   {
-   "item": "pants",
+   "item": "rubashka",
+   "name": "Longsleeve",
+   "file": "torso/clothes/longsleeve/longsleeve/teen",
+   "authors": [
+    "bluecarrot16",
+    "ElizaWy",
+    "JaidynReiman",
+    "Stephen Challener (Redshrike)",
+    "Johannes Sjölund (wulax)"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+    "https://opengameart.org/content/lpc-teen-unisex-base-clothes",
+    "http://opengameart.org/content/lpc-clothing-updates",
+    "https://opengameart.org/content/lpc-revised-character-basics",
+    "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
+    "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+    "https://opengameart.org/content/lpc-expanded-simple-shirts"
+   ],
+   "notes": "body by Redshrike, shirt by ElizaWy derived from base, edited by bluecarrot16 to v3 bases; cleanup and climb/jump/run/sit/emote/revised combat adapted from LPC Revised by JaidynReiman"
+  },
+  {
+   "item": "shtany",
    "name": "Pants",
    "file": "legs/pants/male",
    "authors": [
@@ -369,25 +722,72 @@
    "notes": "original male pants by wulax, recolors and edits to v3 base by bluecarrot16, climb/jump/run/sit/emotes/revised combat by JaidynReiman based on ElizaWy's LPC Revised"
   },
   {
-   "item": "shoes",
-   "name": "Basic Shoes",
-   "file": "feet/shoes",
+   "item": "shtany",
+   "name": "Pants",
+   "file": "legs/pants/thin",
+   "authors": [
+    "bluecarrot16",
+    "JaidynReiman",
+    "ElizaWy",
+    "Joe White",
+    "Matthew Krohn (makrohn)",
+    "Johannes Sjölund (wulax)",
+    "Stephen Challener (Redshrike)"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "GPL 3.0",
+    "CC-BY-SA 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+    "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
+    "http://opengameart.org/content/lpc-clothing-updates",
+    "https://opengameart.org/content/lpc-expanded-pants"
+   ],
+   "notes": "original male pants by wulax, edited for female by Joe White, recolors and edits to v3 base by bluecarrot16, teen legs by ElizaWy derived from base, climb/jump/run/sit/emotes/revised combat by JaidynReiman based on ElizaWy's LPC Revised"
+  },
+  {
+   "item": "botinki",
+   "name": "Basic Boots",
+   "file": "feet/boots/basic",
    "authors": [
     "JaidynReiman",
     "bluecarrot16",
-    "Johannes Sjölund (wulax)"
+    "Nila122"
    ],
    "licenses": [
     "OGA-BY 3.0",
     "CC-BY-SA 3.0",
+    "GPL 2.0",
     "GPL 3.0"
    ],
    "urls": [
-    "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
-    "http://opengameart.org/content/lpc-clothing-updates",
+    "https://opengameart.org/content/lpc-clothes-and-hair",
     "https://opengameart.org/content/lpc-expanded-socks-shoes"
    ],
-   "notes": "original by wulax, edited for v3 base by bluecarrot16, Jump/Sit/Emote/Run/Revised Combat by JaidynReiman"
+   "notes": "original by Nila122, edited for male and v3 bases by bluecarrot16, Jump/Sit/Emote/Run/Revised Combat by JaidynReiman"
+  },
+  {
+   "item": "botinki",
+   "name": "Basic Boots",
+   "file": "feet/boots/basic/thin",
+   "authors": [
+    "JaidynReiman",
+    "bluecarrot16",
+    "Nila122"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "CC-BY-SA 3.0",
+    "GPL 2.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/lpc-clothes-and-hair",
+    "https://opengameart.org/content/lpc-expanded-socks-shoes"
+   ],
+   "notes": "original by Nila122, edited for v3 bases by bluecarrot16, Jump/Sit/Emote/Run/Revised Combat by JaidynReiman"
   },
   {
    "item": "shlem_kozha",
@@ -470,6 +870,30 @@
    "notes": "adapted to v3 bases by bluecarrot16, reduced colors and climb/emote/jump by JaidynReiman"
   },
   {
+   "item": "kurtka_kozha",
+   "name": "Leather",
+   "file": "torso/armour/leather/teen",
+   "authors": [
+    "Michael Whitlock (bigbeargames)",
+    "Matthew Krohn (makrohn)",
+    "Johannes Sjölund (wulax)",
+    "bluecarrot16",
+    "JaidynReiman"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "CC-BY-SA 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
+    "https://opengameart.org/content/lpc-combat-armor-for-women",
+    "https://opengameart.org/content/lpc-clothing-updates",
+    "https://opengameart.org/content/lpc-expanded-armor"
+   ],
+   "notes": "adapted to v3 bases by bluecarrot16, teen version by JaidynReiman adapted from Male and Female versions"
+  },
+  {
    "item": "kolchuga",
    "name": "Chainmail",
    "file": "torso/chainmail",
@@ -509,6 +933,27 @@
     "https://opengameart.org/content/lpc-combat-armor-for-women"
    ],
    "notes": "original by wulax, recolor by bigbeargames, color reduced to 7 colors and adapted to v3 bases by bluecarrot16, run/jump/sit/climb/revised combat by JaidynReiman, reduced colors to 6 (based on Napsio's Vitruvian)"
+  },
+  {
+   "item": "laty",
+   "name": "Plate",
+   "file": "torso/armour/plate/teen",
+   "authors": [
+    "JaidynReiman",
+    "bluecarrot16",
+    "Michael Whitlock (bigbeargames)",
+    "Johannes Sjölund (wulax)"
+   ],
+   "licenses": [
+    "OGA-BY 3.0",
+    "CC-BY-SA 3.0",
+    "GPL 3.0"
+   ],
+   "urls": [
+    "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
+    "https://opengameart.org/content/lpc-combat-armor-for-women"
+   ],
+   "notes": "original by wulax, color reduced to 7 colors and adapted to v3 bases by bluecarrot16, adapted to teen base from male/female by JaidynReiman"
   },
   {
    "item": "kinzhal",

@@ -21,7 +21,7 @@
 })();
 </script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <button id="tema-btn" type="button" aria-label="Сменить тему"></button>
@@ -40,9 +40,11 @@
     <div class="hero-stage">
       <canvas id="hero" aria-label="Герой"></canvas>
       <div id="nokaut" class="nokaut" hidden>Нокаут</div>
+      <div id="forma-up" class="forma-up" hidden></div>
     </div>
     <div class="stats">
-      <div class="lvl">Уровень <b id="uroven">–</b></div>
+      <div class="lvl">Уровень <b id="uroven">–</b> · форма <b id="forma">–</b></div>
+      <div id="trenirovki" class="muted small"></div>
       <div class="bar-row">
         <span class="lbl">Здоровье</span>
         <div class="bar hp"><i id="hp-bar"></i></div>
@@ -103,7 +105,7 @@
   </section>
 </main>
 
-<script src="hero.js?v=4"></script>
-<script src="app.js?v=4"></script>
+<script src="hero.js?v=5"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

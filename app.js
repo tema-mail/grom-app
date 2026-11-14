@@ -3,8 +3,10 @@
 (function () {
   "use strict";
 
-  var SLOTY = { golova: "Голова", telo: "Тело", ruka: "Рука", shchit: "Щит", spina: "Спина" };
+  var SLOTY = { golova: "Голова", telo: "Тело", nogi: "Ноги", obuv: "Обувь", ruka: "Рука", shchit: "Щит", spina: "Спина" };
+  var FORMA = { dryshch: "дрыщ", norma: "норма", atlet: "атлет" };
   var NAZV = {
+    mayka: "Майка", rubashka: "Рубашка", shtany: "Штаны", botinki: "Ботинки", trusy: "Трусы",
     shlem_kozha: "Кожаный шлем", shlem_zhelezo: "Железный шлем", korona: "Корона",
     kurtka_kozha: "Кожаная куртка", kolchuga: "Кольчуга", laty: "Латы",
     kinzhal: "Кинжал", mech: "Меч", topor: "Топор",
@@ -15,9 +17,14 @@
     v: 1, ts: "2026-11-15T10:20:00+07:00",
     uroven: 2, xp: 120, xp_next: 300,
     hp: 82, hp_max: 100, monety: 430, seriya: 4, vyhodnoy: false,
-    naryad: { golova: "shlem_kozha", telo: "kurtka_kozha", ruka: "mech", shchit: null, spina: null },
-    inventar: ["shlem_kozha", "mech", "kurtka_kozha"],
+    naryad: { golova: "shlem_kozha", telo: "mayka", nogi: "shtany", obuv: null, ruka: "kinzhal", shchit: null, spina: null },
+    forma: "dryshch", trenirovok: 3, do_formy: 3,
+    inventar: ["shlem_kozha", "mayka", "shtany", "kinzhal"],
     magazin: [
+      { id: "mayka", nazv: "Майка", slot: "telo", cena: 30, tip: "shmot" },
+      { id: "rubashka", nazv: "Рубашка", slot: "telo", cena: 60, tip: "shmot" },
+      { id: "shtany", nazv: "Штаны", slot: "nogi", cena: 40, tip: "shmot" },
+      { id: "botinki", nazv: "Ботинки", slot: "obuv", cena: 50, tip: "shmot" },
       { id: "shlem_kozha", nazv: "Кожаный шлем", slot: "golova", cena: 60, tip: "shmot" },
       { id: "shlem_zhelezo", nazv: "Железный шлем", slot: "golova", cena: 150, tip: "shmot" },
       { id: "korona", nazv: "Корона", slot: "golova", cena: 500, tip: "shmot" },
@@ -144,22 +151,38 @@
     state = s;
     $("demo").hidden = !demo;
     var prev = shown || (demo ? null : readPrev());
-    var now = { hp: num(s.hp), monety: num(s.monety) };
+    var now = { hp: num(s.hp), monety: num(s.monety), forma: s.forma || "" };
     render();
     if (demo) {
       setTimeout(function () { window.GromHero.play("slash"); }, 900);
     } else if (prev) {
-      if (now.hp < num(prev.hp)) window.GromHero.play("hurt");
+      if (prev.forma && now.forma && prev.forma !== now.forma && FORMA[now.forma]) formaUp(now.forma);
+      else if (now.hp < num(prev.hp)) window.GromHero.play("hurt");
       else if (now.monety > num(prev.monety) && !s.nokaut) window.GromHero.play("slash");
     }
     shown = now;
     if (!demo) lsSet("grom_prev", JSON.stringify(now));
   }
 
+  // смена формы тела: плашка над героем и победный замах
+  function formaUp(f) {
+    var b = $("forma-up");
+    b.textContent = "Форма: " + FORMA[f] + "!";
+    b.hidden = false;
+    window.GromHero.play("slash");
+    setTimeout(function () { window.GromHero.play("walk"); }, 700);
+    setTimeout(function () { b.hidden = true; }, 5000);
+  }
+
   // ---------- отрисовка ----------
   function render() {
     var s = state;
-    window.GromHero.set(s.naryad || {}, !!s.nokaut);
+    window.GromHero.set(s.naryad || {}, !!s.nokaut, s.forma);
+    $("forma").textContent = FORMA[s.forma] || "–";
+    var trn = "тренировок: " + num(s.trenirovok);
+    if (s.do_formy === null) trn += " · последняя форма";
+    else if (s.do_formy !== undefined) trn += " · до следующей формы: " + num(s.do_formy);
+    $("trenirovki").textContent = s.trenirovok === undefined ? "" : trn;
     $("nokaut").hidden = !s.nokaut;
     $("uroven").textContent = num(s.uroven, 1);
     $("hp-bar").style.width = pct(s.hp, s.hp_max) + "%";

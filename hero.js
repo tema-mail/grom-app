@@ -16,6 +16,9 @@
   var canvas, ctx;
   var naryad = {};
   var nokaut = false;
+  var forma = "dryshch"; // форма тела из state.json: dryshch | norma | atlet – у каждого слоя файл под своё тело
+
+  function fileOf(L, f) { return L.f[f || forma] || L.f.norma; }
   var anim = null; // {name, frame, until}
   var timer = null;
   var nextStep = 0;
@@ -50,7 +53,7 @@
     ctx.clearRect(0, 0, VIEW, VIEW);
     var cur = current();
     layers().forEach(function (L) {
-      var img = load(L.f);
+      var img = load(fileOf(L));
       if (!img.complete || !img.naturalWidth) return;
       if (L.slash) {
         if (cur.name !== "slash") return;
@@ -93,9 +96,9 @@
   }
 
   function preload(ids) {
-    manifest.base.forEach(function (L) { load(L.f); });
+    manifest.base.forEach(function (L) { load(fileOf(L)); });
     ids.forEach(function (id) {
-      (manifest.items[id] || []).forEach(function (L) { load(L.f); });
+      (manifest.items[id] || []).forEach(function (L) { load(fileOf(L)); });
     });
   }
 
@@ -112,7 +115,7 @@
       tmp.width = F; tmp.height = F;
       var t = tmp.getContext("2d");
       ls.slice().sort(function (a, b) { return a.z - b.z; }).forEach(function (L) {
-        var img = images[L.f];
+        var img = images[fileOf(L, "norma")];
         if (img && img.complete && img.naturalWidth) t.drawImage(img, 0, 0, F, F, 0, 0, F, F);
       });
       var px = t.getImageData(0, 0, F, F).data;
@@ -132,7 +135,7 @@
       c.drawImage(tmp, x0, y0, w, h, Math.floor((target.width - w * k) / 2), Math.floor((target.height - h * k) / 2), w * k, h * k);
     }
     ls.forEach(function (L) {
-      var img = load(L.f);
+      var img = load(fileOf(L, "norma"));
       if (img.complete) { pending -= 1; } else {
         img.addEventListener("load", function () { pending -= 1; if (pending <= 0) paint(); });
       }
@@ -153,7 +156,10 @@
       if (!timer) timer = setInterval(tick, 30);
       draw();
     },
-    set: function (n, isNokaut) {
+    set: function (n, isNokaut, f) {
+      if (f && manifest.forms[f]) {
+        if (f !== forma) { forma = f; preload(Object.keys(manifest.items)); }
+      }
       naryad = n || {};
       nokaut = !!isNokaut;
       if (nokaut && anim && anim.name !== "hurt") anim = null;

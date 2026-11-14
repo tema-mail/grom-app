@@ -9,6 +9,7 @@
 строка 1 – slash лицом вниз (6 кадров), строка 2 – hurt (6 кадров), кадр 64x64.
 Слои удара большого оружия (slash_128, slash_oversize) – полоса 6 кадров по 128 или 192 px.
 Раскраска по палитрам LPC делается здесь, в браузере палитр нет.
+Слои собираются под три тела по форме героя (FORMS); манифест хранит файл слоя для каждой формы.
 """
 import json
 import sys
@@ -22,16 +23,35 @@ OUT = ROOT / "sprites"
 F = 64
 SOUTH = 2  # строка «лицом вниз» в листах walk и slash (n, w, s, e)
 
-# (ключ, определение, номера слоёв, вариант-файл, перекраска (материал, база, цель))
+# (ключ, определение, номера слоёв, вариант-файл, перекраски [(материал, база, цель)])
+# ---------- ВНЕШНОСТЬ ГЕРОЯ: менять только здесь, потом заново запустить скрипт ----------
+# Цвета – имена из palette_definitions/<материал>/<материал>_ulpc.json генератора LPC.
+VNESHNOST = {
+    "kozha": "light",                              # кожа: light, amber, olive, taupe, bronze, brown, black…
+    "volosy": "hair/short/hair_plain.json",        # причёска: файл из sheet_definitions/hair/…
+    "volosy_cvet": "dark_brown",                   # цвет волос, бровей и бороды: black, dark_brown, chestnut…
+    "boroda": None,                                # None или "hair/beards/beards_5oclock_shadow.json" (щетина), beards_trimmed…
+    "brovi": None,                                 # None или "head/eyebrows/eyebrows_thin.json" / eyebrows_thick.json
+    "glaza": "blue",                               # глаза: blue, green, brown, gray…
+}
+V = VNESHNOST
+SKIN = ("body", "light", V["kozha"])
+HAIR = ("hair", "orange", V["volosy_cvet"])
+
 BASE = [
-    ("body", "body/body.json", [1], None, None),
-    ("head", "head/heads/human/heads_human_male.json", [1], None, None),
-    ("hair", "hair/short/hair_plain.json", [1], None, ("hair", "orange", "dark_brown")),
-    ("shirt", "torso/shirts/longsleeve/torso_clothes_longsleeve.json", [1], None, ("cloth", "white", "bluegray")),
-    ("pants", "legs/pants/legs_pants.json", [1], None, ("cloth", "white", "charcoal")),
-    ("shoes", "feet/shoes/feet_shoes_basic.json", [1], None, ("cloth", "white", "brown")),
-]
+    ("body", "body/body.json", [1], None, [SKIN]),
+    ("head", "head/heads/human/heads_human_male.json", [1], None, [SKIN, ("eye", "blue", V["glaza"])]),
+    ("hair", V["volosy"], [1], None, [HAIR]),
+    ("trusy", "legs/shorts/legs_shorts_short.json", [1], None, [("cloth", "white", "navy")]),
+] + [(k, V[k], [1], None, [HAIR]) for k in ("boroda", "brovi") if V[k]]
+# Форма героя -> тип тела LPC. Если у предмета нет слоя под тело, берём ближайший (FALLBACK).
+FORMS = {"dryshch": "teen", "norma": "male", "atlet": "muscular"}
+FALLBACK = {"teen": ["teen", "male"], "male": ["male"], "muscular": ["muscular", "male"]}
 ITEMS = [
+    ("mayka", "torso/shirts/sleeveless/torso_clothes_sleeveless1.json", [1], None, None),
+    ("rubashka", "torso/shirts/longsleeve/torso_clothes_longsleeve.json", [1], None, [("cloth", "white", "bluegray")]),
+    ("shtany", "legs/pants/legs_pants.json", [1], None, [("cloth", "white", "charcoal")]),
+    ("botinki", "feet/boots/feet_boots_basic.json", [1], None, [("cloth", "white", "brown")]),
     ("shlem_kozha", "headwear/hats/caps/hat_cap_leather.json", [1], "leather", None),
     ("shlem_zhelezo", "headwear/helmets/helmets/hat_helmet_nasal.json", [1], None, None),
     ("korona", "headwear/hats/formal/hat_formal_crown.json", [1], "crown_gold", None),
@@ -43,7 +63,7 @@ ITEMS = [
     ("topor", "weapons/blunt/weapon_blunt_waraxe.json", [1, 2, 3, 4], "waraxe", None),
     ("shchit_derevo", "weapons/shields/heater/shield_heater_revised_wood.json", [1, 2], None, None),
     ("shchit_zhelezo", "weapons/shields/shield_kite.json", [1], "kite_gray", None),
-    ("plashch", "torso/cape/cape_solid.json", [1, 2], None, ("cloth", "white", "red")),
+    ("plashch", "torso/cape/cape_solid.json", [1, 2], None, [("cloth", "white", "red")]),
 ]
 CUSTOM_SIZE = {"slash_128": 128, "slash_oversize": 192}
 
@@ -53,24 +73,48 @@ def hexrgb(h):
     return [int(h[i:i + 2], 16) for i in (0, 2, 4)]
 
 
-def recolor(im, lpc, spec):
-    if not spec:
+def recolor(im, lpc, specs):
+    if not specs:
         return im
-    material, base, target = spec
-    pal = json.loads((lpc / f"palette_definitions/{material}/{material}_ulpc.json").read_text())
-    src, dst = pal[base], pal[target]
     a = np.array(im.convert("RGBA")).astype(np.int16)
     out = a.copy()
-    for s, d in zip(src, dst):
-        s, d = hexrgb(s), hexrgb(d)
-        m = (np.abs(a[..., :3] - s) <= 1).all(axis=-1) & (a[..., 3] > 0)
-        out[m, :3] = d
+    for material, base, target in specs:
+        if base == target:
+            continue
+        pal = json.loads((lpc / f"palette_definitions/{material}/{material}_ulpc.json").read_text())
+        for src, dst in zip(pal[base], pal[target]):
+            src, dst = hexrgb(src), hexrgb(dst)
+            m = (np.abs(a[..., :3] - src) <= 1).all(axis=-1) & (a[..., 3] > 0)
+            out[m, :3] = dst
     return Image.fromarray(out.astype(np.uint8), "RGBA")
 
 
+RAW = "https://raw.githubusercontent.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator/master/"
+
+
+def fetch(lpc, rel):
+    """Файла нет в sparse-клоне (сменили причёску, бороду) – докачать его с GitHub в тот же клон."""
+    p = lpc / rel
+    if p.exists():
+        return p
+    import subprocess
+    import tempfile
+    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
+    tmp.close()
+    ok = subprocess.run(["curl", "-fsSL", "--max-time", "30", "-o", tmp.name, RAW + rel], stderr=subprocess.DEVNULL).returncode == 0
+    if not ok:
+        Path(tmp.name).unlink(missing_ok=True)
+        return p
+    data = Path(tmp.name).read_bytes()
+    Path(tmp.name).unlink()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_bytes(data)
+    return p
+
+
 def sheet(lpc, base_path, anim, variant):
-    p = lpc / "spritesheets" / base_path / anim
-    p = p / f"{variant}.png" if variant else p.with_suffix(".png")
+    rel = f"spritesheets/{base_path}{anim}" + (f"/{variant}.png" if variant else ".png")
+    p = fetch(lpc, rel)
     return Image.open(p).convert("RGBA") if p.exists() else None
 
 
@@ -87,7 +131,7 @@ def build_std(lpc, base_path, variant, spec):
 
 
 def build_custom(lpc, base_path, variant, size):
-    p = lpc / "spritesheets" / base_path / f"{variant}.png"
+    p = fetch(lpc, f"spritesheets/{base_path}{variant}.png")
     im = Image.open(p).convert("RGBA")
     return im.crop((0, SOUTH * size, 6 * size, (SOUTH + 1) * size))
 
@@ -96,29 +140,49 @@ def save(im, name):
     im.save(OUT / f"{name}.webp", "WEBP", lossless=True, quality=100, method=6)
 
 
+def body_path(L, body):
+    for b in FALLBACK[body]:
+        if L.get(b):
+            return L[b], b
+    raise SystemExit(f"нет слоя ни под одно тело: {L}")
+
+
 def main():
     lpc = Path(sys.argv[1]).resolve()
     OUT.mkdir(exist_ok=True)
-    manifest = {"base": [], "items": {}}
+    for old in OUT.glob("*.webp"):
+        old.unlink()
+    manifest = {"forms": FORMS, "base": [], "items": {}, "fallbacks": []}
     credits = []
     for group, key in ((BASE, "base"), (ITEMS, "items")):
         for name, defn, layers, variant, spec in group:
             d = json.loads((lpc / "sheet_definitions" / defn).read_text())
-            out_layers, used = [], []
+            out_layers, used = [], set()
             for n in layers:
                 L = d[f"layer_{n}"]
-                path = L["male"]
-                used.append(path)
-                fname = f"{name}_{n}"
                 custom = L.get("custom_animation")
+                files, made = {}, {}
+                for forma, body in FORMS.items():
+                    path, got = body_path(L, body)
+                    if got != body:
+                        manifest["fallbacks"].append(f"{name} слой {n}: {body} -> {got}")
+                    used.add(path)
+                    if path not in made:
+                        fname = f"{name}_{n}_{got}" if len({body_path(L, b)[0] for b in FORMS.values()}) > 1 else f"{name}_{n}"
+                        if custom:
+                            save(build_custom(lpc, path, variant, CUSTOM_SIZE[custom]), fname)
+                            made[path] = (fname, None)
+                        else:
+                            im, found = build_std(lpc, path, variant, spec)
+                            save(im, fname)
+                            made[path] = (fname, found)
+                    files[forma] = made[path][0]
+                one = {"f": files, "z": L["zPos"]}
                 if custom:
-                    size = CUSTOM_SIZE[custom]
-                    save(build_custom(lpc, path, variant, size), fname)
-                    out_layers.append({"f": fname, "z": L["zPos"], "slash": size})
+                    one["slash"] = CUSTOM_SIZE[custom]
                 else:
-                    im, found = build_std(lpc, path, variant, spec)
-                    save(im, fname)
-                    out_layers.append({"f": fname, "z": L["zPos"], "anims": found})
+                    one["anims"] = next(iter(made.values()))[1]
+                out_layers.append(one)
             if key == "base":
                 manifest["base"].extend(out_layers)
             else:
@@ -128,10 +192,12 @@ def main():
                 if any(u.startswith(cf + "/") or u.rstrip("/") == cf or cf.startswith(u.rstrip("/")) for u in used):
                     credits.append({"item": name, "name": d["name"], "file": c["file"], "authors": c["authors"],
                                     "licenses": c["licenses"], "urls": c.get("urls", []), "notes": c.get("notes", "")})
+    manifest["fallbacks"] = sorted(set(manifest["fallbacks"]))
     manifest["credits"] = credits
     (OUT / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
     write_credits_md(credits)
     print("слоёв:", len(list(OUT.glob("*.webp"))), "записей авторов:", len(credits))
+    print("подставлено чужое тело:", *manifest["fallbacks"], sep="\n  ")
 
 
 def write_credits_md(credits):
