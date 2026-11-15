@@ -237,7 +237,7 @@ final class PetController {
         if let prev = prevMonety, !(state["nokaut"] as? Bool ?? false) {
             if ev != prevEv, ev.range(of: "День закрыт|Челлендж.*выполнен", options: [.regularExpression, .caseInsensitive]) != nil {
                 startFight("kapitan")
-            } else if monety > prev, ev.range(of: "Зелёная задача", options: .caseInsensitive) != nil {
+            } else if monety > prev, (ev.range(of: "Ключевая задача", options: .caseInsensitive) != nil || ev.range(of: "Зелёная задача", options: .caseInsensitive) != nil) {
                 startFight("cherepaha")
             }
         }

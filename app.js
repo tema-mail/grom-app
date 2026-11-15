@@ -47,7 +47,7 @@
     boss: { nazv: "Жир", hp: 2600, hp_max: 3000, srok: "2026-12-16" },
     segodnya: { zakryt: false, sobytiya: [
       { t: "08:05", tekst: "Подъём вовремя +20" },
-      { t: "10:20", tekst: "Зелёная задача +50" },
+      { t: "10:20", tekst: "Ключевая задача недели «КП Минску»: +50 монет" },
     ] },
     replika: "Принято. +50. Вот так и надо.",
     nokaut: false,
@@ -161,7 +161,7 @@
       else if (now.hp < num(prev.hp)) window.GromHero.play("hurt");
       else if (!s.nokaut && now.ev !== prev.ev && /День закрыт|Челлендж.*выполнен/i.test(now.ev)) window.GromHero.fight("kapitan");
       else if (now.monety > num(prev.monety) && !s.nokaut) {
-        if (/Зелёная задача/i.test(now.ev)) window.GromHero.fight("cherepaha");
+        if (/Ключевая задача|Зелёная задача/i.test(now.ev)) window.GromHero.fight("cherepaha");
         else window.GromHero.play("slash");
       }
     }
