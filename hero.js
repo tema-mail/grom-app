@@ -43,7 +43,7 @@
     if (images[name]) return images[name];
     var img = new Image();
     img.decoding = "async";
-    img.src = "sprites/" + name + ".webp";
+    img.src = "sprites/" + name + ".webp" + (manifest && manifest.v ? "?v=" + manifest.v : "");
     img.onload = draw;
     images[name] = img;
     return img;

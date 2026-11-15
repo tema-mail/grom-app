@@ -427,7 +427,7 @@
     if (s) apply(s, false);
   });
 
-  fetch("sprites/manifest.json").then(function (r) { return r.json(); }).then(function (m) {
+  fetch("sprites/manifest.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (m) {
     manifest = m;
     window.GromHero.init($("hero"), m);
     renderCredits();

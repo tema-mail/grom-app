@@ -60,6 +60,20 @@
     "hurt",
     "sit"
    ]
+  },
+  {
+   "f": {
+    "dryshch": "brovi_1",
+    "norma": "brovi_1",
+    "atlet": "brovi_1"
+   },
+   "z": 106,
+   "anims": [
+    "walk",
+    "slash",
+    "hurt",
+    "sit"
+   ]
   }
  ],
  "items": {
@@ -569,24 +583,21 @@
   },
   {
    "item": "hair",
-   "name": "Plain",
-   "file": "hair/plain",
+   "name": "Cowlick",
+   "file": "hair/cowlick",
    "authors": [
-    "JaidynReiman",
-    "Manuel Riecke (MrBeast)",
-    "Joe White"
+    "ElizaWy",
+    "bluecarrot16"
    ],
    "licenses": [
-    "OGA-BY 3.0",
-    "CC-BY-SA 3.0",
-    "GPL 3.0"
+    "CC0"
    ],
    "urls": [
-    "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
-    "https://opengameart.org/content/ponytail-and-plain-hairstyles",
-    "https://opengameart.org/content/lpc-expanded-hair"
+    "https://opengameart.org/content/lpc-hair",
+    "https://github.com/ElizaWy/LPC/blob/main/Characters/Hair",
+    "https://opengameart.org/content/lpc-expanded-sit-run-jump-more"
    ],
-   "notes": ""
+   "notes": "Original by bluecarrot16, animated by ElizaWy."
   },
   {
    "item": "trusy",
@@ -628,6 +639,22 @@
     "https://opengameart.org/content/lpc-expanded-pants"
    ],
    "notes": "Original bases by Redshrike, thrust/shoot bases by Wulax, original shorts by ElizaWy, climb/jump/run/sit/emotes/revised combat by JaidynReiman"
+  },
+  {
+   "item": "brovi",
+   "name": "Thick Eyebrows",
+   "file": "eyes/eyebrows/thick",
+   "authors": [
+    "ElizaWy"
+   ],
+   "licenses": [
+    "OGA-BY 3.0"
+   ],
+   "urls": [
+    "https://github.com/ElizaWy/LPC/tree/main/Characters/Hair",
+    "https://opengameart.org/content/lpc-expanded-sit-run-jump-more"
+   ],
+   "notes": ""
   },
   {
    "item": "mayka",
@@ -1139,5 +1166,6 @@
    ],
    "notes": ""
   }
- ]
+ ],
+ "v": "7cba4471"
 }

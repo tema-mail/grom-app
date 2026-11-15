@@ -62,13 +62,14 @@
 - https://opengameart.org/content/lpc-character-bases
 - Примечание: original head by Redshrike, tweaks by BenCreating, modular version by bluecarrot16
 
-## hair – Plain (`hair/plain`)
+## hair – Cowlick (`hair/cowlick`)
 
-- Авторы: JaidynReiman, Manuel Riecke (MrBeast), Joe White
-- Лицензии: OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0
-- https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
-- https://opengameart.org/content/ponytail-and-plain-hairstyles
-- https://opengameart.org/content/lpc-expanded-hair
+- Авторы: ElizaWy, bluecarrot16
+- Лицензии: CC0
+- https://opengameart.org/content/lpc-hair
+- https://github.com/ElizaWy/LPC/blob/main/Characters/Hair
+- https://opengameart.org/content/lpc-expanded-sit-run-jump-more
+- Примечание: Original by bluecarrot16, animated by ElizaWy.
 
 ## trusy – Short Shorts (`legs/shorts/short_shorts/male`)
 
@@ -86,6 +87,13 @@
 - https://opengameart.org/content/lpc-expanded-sit-run-jump-more
 - https://opengameart.org/content/lpc-expanded-pants
 - Примечание: Original bases by Redshrike, thrust/shoot bases by Wulax, original shorts by ElizaWy, climb/jump/run/sit/emotes/revised combat by JaidynReiman
+
+## brovi – Thick Eyebrows (`eyes/eyebrows/thick`)
+
+- Авторы: ElizaWy
+- Лицензии: OGA-BY 3.0
+- https://github.com/ElizaWy/LPC/tree/main/Characters/Hair
+- https://opengameart.org/content/lpc-expanded-sit-run-jump-more
 
 ## mayka – Original Sleeveless (`torso/clothes/sleeveless/sleeveless1/male`)
 

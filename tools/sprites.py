@@ -31,11 +31,11 @@ WEST, EAST = 1, 3  # ходьба влево и вправо – для геро
 # Цвета – имена из palette_definitions/<материал>/<материал>_ulpc.json генератора LPC.
 VNESHNOST = {
     "kozha": "light",                              # кожа: light, amber, olive, taupe, bronze, brown, black…
-    "volosy": "hair/short/hair_plain.json",        # причёска: файл из sheet_definitions/hair/…
-    "volosy_cvet": "dark_brown",                   # цвет волос, бровей и бороды: black, dark_brown, chestnut…
+    "volosy": "hair/short/hair_cowlick.json",      # причёска: файл из sheet_definitions/hair/… (Артём 15.11: коротко по бокам, объём сверху назад)
+    "volosy_cvet": "black",                        # цвет волос, бровей и бороды: black, dark_brown, chestnut…
     "boroda": None,                                # None или "hair/beards/beards_5oclock_shadow.json" (щетина), beards_trimmed…
-    "brovi": None,                                 # None или "head/eyebrows/eyebrows_thin.json" / eyebrows_thick.json
-    "glaza": "blue",                               # глаза: blue, green, brown, gray…
+    "brovi": "head/eyebrows/eyebrows_thick.json",  # None или "head/eyebrows/eyebrows_thin.json" / eyebrows_thick.json
+    "glaza": "brown",                              # глаза: blue, green, brown, gray…
 }
 V = VNESHNOST
 SKIN = ("body", "light", V["kozha"])
@@ -164,7 +164,8 @@ def main():
     lpc = Path(sys.argv[1]).resolve()
     OUT.mkdir(exist_ok=True)
     for old in OUT.glob("*.webp"):
-        old.unlink()
+        if not old.name.startswith("vrag_"):  # противники – свои, их рисует tools/enemies.py
+            old.unlink()
     manifest = {"forms": FORMS, "base": [], "items": {}, "extra": {}, "fallbacks": []}
     credits = []
     for group, key in ((BASE, "base"), (ITEMS, "items"), (EXTRA, "extra")):
@@ -207,6 +208,11 @@ def main():
                                     "licenses": c["licenses"], "urls": c.get("urls", []), "notes": c.get("notes", "")})
     manifest["fallbacks"] = sorted(set(manifest["fallbacks"]))
     manifest["credits"] = credits
+    import hashlib
+    h = hashlib.sha1()
+    for f in sorted(OUT.glob("*.webp")):
+        h.update(f.read_bytes())
+    manifest["v"] = h.hexdigest()[:8]  # версия слоёв: страница добавляет её к адресам картинок, чтобы кэш не держал старые
     (OUT / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
     write_credits_md(credits)
     print("слоёв:", len(list(OUT.glob("*.webp"))), "записей авторов:", len(credits))
